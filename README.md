@@ -21,7 +21,17 @@ A cosmic DJ experience — a Next.js site with an immersive hero (animated light
 
 - **Light rays** — Full-screen WebGL rays from the top; space-theme color cycling every ~1.8s with smooth transitions; optional sync of headphone SVG color to the rays.
 - **Hero title** — “DJ Space Jam” inside a headphone graphic (inline SVG) with gradient/synced color and motion-animated text.
-- **Turntable** — Centered DJ controller UI (jog wheels, mixer panel, nav knobs) with GSAP-driven interactions; knobs route to content sections (About, Samples, Contact, Residencies, Media).
+- **Turntable** — Centered DJ controller UI (jog wheels, mixer panel, nav knobs) with GSAP-driven interactions. Knobs: Home, About, Residencies, Media, Samples, SoundCloud (O), Instagram (I), Contact, Thread (T); external links open in a new tab.
+
+## TODO
+
+- [ ] **Content for each page** — Copy and assets for About, Samples, Contact, Residencies, Media
+- [ ] **Plan for uploading small music files (10–25 sec)** — Hosting, format, and playback for sample clips
+- [ ] **Implement social links** — Wire turntable knobs (SoundCloud, Instagram, Thread) to real profile URLs
+- [ ] **Refactor code if needed** — Clean up and structure after features are in place
+- [ ] **Plan for mobile responsiveness** — e.g. nav links for viewports smaller than tablet instead of turntable
+- [ ] **Testing** — Manual and/or automated tests before launch
+- [ ] **Deploy** — Ship to Vercel or chosen host
 
 ## Getting started
 
