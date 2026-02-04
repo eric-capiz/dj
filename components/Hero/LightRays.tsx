@@ -14,6 +14,28 @@ export type RaysOrigin =
   | "bottom-right"
   | "bottom-left";
 
+/** Space-theme colors for ray cycling (blues, purples, indigos, violets, soft cyan) */
+const SPACE_THEME_COLORS = [
+  "#e0e7ff",
+  "#c7d2fe",
+  "#a5b4fc",
+  "#818cf8",
+  "#6366f1",
+  "#8b5cf6",
+  "#a78bfa",
+  "#c4b5fd",
+  "#7c3aed",
+  "#6d28d9",
+  "#06b6d4",
+  "#22d3ee",
+  "#67e8f9",
+  "#0ea5e9",
+  "#38bdf8",
+  "#a855f7",
+  "#d946ef",
+  "#e879f9",
+];
+
 interface LightRaysProps {
   raysOrigin?: RaysOrigin;
   raysColor?: string;
@@ -27,6 +49,12 @@ interface LightRaysProps {
   mouseInfluence?: number;
   noiseAmount?: number;
   distortion?: number;
+  /** When true, rays cycle through space-theme colors every few seconds with a smooth transition */
+  cycleRaysColor?: boolean;
+  /** How often to pick a new color (ms). Default 2800 */
+  raysColorCycleIntervalMs?: number;
+  /** Called with the current ray color (hex) so other elements (e.g. SVG) can stay in sync */
+  onRaysColorChange?: (hex: string) => void;
   className?: string;
 }
 
@@ -35,9 +63,27 @@ const DEFAULT_COLOR = "#ffffff";
 const hexToRgb = (hex: string): [number, number, number] => {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return m
-    ? [parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255]
+    ? [
+        parseInt(m[1], 16) / 255,
+        parseInt(m[2], 16) / 255,
+        parseInt(m[3], 16) / 255,
+      ]
     : [1, 1, 1];
 };
+
+const rgbToHex = (r: number, g: number, b: number): string => {
+  const toHex = (x: number) => {
+    const h = Math.round(Math.max(0, Math.min(1, x)) * 255).toString(16);
+    return h.length === 1 ? "0" + h : h;
+  };
+  return "#" + toHex(r) + toHex(g) + toHex(b);
+};
+
+const lerpRgb = (current: Vec3, target: Vec3, t: number): Vec3 => [
+  current[0] + (target[0] - current[0]) * t,
+  current[1] + (target[1] - current[1]) * t,
+  current[2] + (target[2] - current[2]) * t,
+];
 
 const getAnchorAndDir = (
   origin: RaysOrigin,
@@ -204,6 +250,9 @@ export default function LightRays({
   mouseInfluence = 0.1,
   noiseAmount = 0,
   distortion = 0,
+  cycleRaysColor = false,
+  raysColorCycleIntervalMs = 2800,
+  onRaysColorChange,
   className = "",
 }: LightRaysProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -216,6 +265,16 @@ export default function LightRays({
   const cleanupFunctionRef = useRef<(() => void) | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const targetColorRef = useRef<Vec3>(
+    hexToRgb(cycleRaysColor ? SPACE_THEME_COLORS[0] : raysColor)
+  );
+  const cycleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const onRaysColorChangeRef = useRef(onRaysColorChange);
+  const lastColorNotifyRef = useRef(0);
+
+  useEffect(() => {
+    onRaysColorChangeRef.current = onRaysColorChange;
+  }, [onRaysColorChange]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -254,7 +313,10 @@ export default function LightRays({
       if (!containerRef.current) return;
 
       const renderer = new Renderer({
-        dpr: Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 1, 2),
+        dpr: Math.min(
+          typeof window !== "undefined" ? window.devicePixelRatio : 1,
+          2
+        ),
         alpha: true,
       });
       rendererRef.current = renderer;
@@ -268,12 +330,16 @@ export default function LightRays({
       }
       containerRef.current.appendChild(gl.canvas);
 
+      const initialColor = cycleRaysColor
+        ? hexToRgb(SPACE_THEME_COLORS[0])
+        : hexToRgb(raysColor);
+      targetColorRef.current = initialColor.slice(0) as Vec3;
       const uniforms: Uniforms = {
         iTime: { value: 0 },
         iResolution: { value: [1, 1] },
         rayPos: { value: [0, 0] },
         rayDir: { value: [0, 1] },
-        raysColor: { value: hexToRgb(raysColor) },
+        raysColor: { value: initialColor.slice(0) as Vec3 },
         raysSpeed: { value: raysSpeed },
         lightSpread: { value: lightSpread },
         rayLength: { value: rayLength },
@@ -299,7 +365,10 @@ export default function LightRays({
       const updatePlacement = () => {
         if (!containerRef.current || !renderer) return;
 
-        renderer.dpr = Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 1, 2);
+        renderer.dpr = Math.min(
+          typeof window !== "undefined" ? window.devicePixelRatio : 1,
+          2
+        );
 
         const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
         renderer.setSize(wCSS, hCSS);
@@ -326,10 +395,38 @@ export default function LightRays({
         if (followMouse && mouseInfluence > 0) {
           const smoothing = 0.92;
           smoothMouseRef.current.x =
-            smoothMouseRef.current.x * smoothing + mouseRef.current.x * (1 - smoothing);
+            smoothMouseRef.current.x * smoothing +
+            mouseRef.current.x * (1 - smoothing);
           smoothMouseRef.current.y =
-            smoothMouseRef.current.y * smoothing + mouseRef.current.y * (1 - smoothing);
-          uniforms.mousePos.value = [smoothMouseRef.current.x, smoothMouseRef.current.y];
+            smoothMouseRef.current.y * smoothing +
+            mouseRef.current.y * (1 - smoothing);
+          uniforms.mousePos.value = [
+            smoothMouseRef.current.x,
+            smoothMouseRef.current.y,
+          ];
+        }
+
+        if (cycleRaysColor && uniforms.raysColor.value) {
+          const current = uniforms.raysColor.value;
+          const target = targetColorRef.current;
+          const blend = 0.018;
+          uniforms.raysColor.value = lerpRgb(current, target, blend);
+          const notify = onRaysColorChangeRef.current;
+          if (notify) {
+            const shouldNotify =
+              lastColorNotifyRef.current === 0 ||
+              t - lastColorNotifyRef.current > 66;
+            if (shouldNotify) {
+              lastColorNotifyRef.current = t;
+              notify(
+                rgbToHex(
+                  uniforms.raysColor.value[0],
+                  uniforms.raysColor.value[1],
+                  uniforms.raysColor.value[2]
+                )
+              );
+            }
+          }
         }
 
         try {
@@ -344,7 +441,31 @@ export default function LightRays({
       updatePlacement();
       animationIdRef.current = requestAnimationFrame(loop);
 
+      if (cycleRaysColor) {
+        cycleIntervalRef.current = setInterval(() => {
+          const prev = targetColorRef.current;
+          let nextHex =
+            SPACE_THEME_COLORS[
+              Math.floor(Math.random() * SPACE_THEME_COLORS.length)
+            ];
+          while (
+            hexToRgb(nextHex).every((v, i) => Math.abs(v - prev[i]) < 0.05) &&
+            SPACE_THEME_COLORS.length > 1
+          ) {
+            nextHex =
+              SPACE_THEME_COLORS[
+                Math.floor(Math.random() * SPACE_THEME_COLORS.length)
+              ];
+          }
+          targetColorRef.current = hexToRgb(nextHex);
+        }, raysColorCycleIntervalMs);
+      }
+
       cleanupFunctionRef.current = () => {
+        if (cycleIntervalRef.current) {
+          clearInterval(cycleIntervalRef.current);
+          cycleIntervalRef.current = null;
+        }
         if (animationIdRef.current) {
           cancelAnimationFrame(animationIdRef.current);
           animationIdRef.current = null;
@@ -386,10 +507,13 @@ export default function LightRays({
     mouseInfluence,
     noiseAmount,
     distortion,
+    cycleRaysColor,
+    raysColorCycleIntervalMs,
   ]);
 
   useEffect(() => {
-    if (!uniformsRef.current || !containerRef.current || !rendererRef.current) return;
+    if (!uniformsRef.current || !containerRef.current || !rendererRef.current)
+      return;
 
     const u = uniformsRef.current;
     const renderer = rendererRef.current;

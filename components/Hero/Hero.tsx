@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import LightRays from "./LightRays";
 import { HeroTitle } from "./HeroTitle";
 import { Turntable } from "@/components/Turntable";
@@ -10,6 +11,8 @@ interface HeroProps {
 }
 
 export function Hero({ onNavClick }: HeroProps) {
+  const [raysColor, setRaysColor] = useState("#e0e7ff");
+
   return (
     <section
       className="relative min-h-screen bg-[#06060a] overflow-x-hidden"
@@ -20,7 +23,7 @@ export function Hero({ onNavClick }: HeroProps) {
 
       {/* React Bits Light Rays — full hero, rays shine down over the whole area */}
       <div
-        className="absolute inset-0 z-[1]"
+        className="absolute inset-0 z-1"
         style={{ width: "100%", height: "100%" }}
       >
         <LightRays
@@ -36,6 +39,9 @@ export function Hero({ onNavClick }: HeroProps) {
           pulsating={false}
           fadeDistance={1}
           saturation={1}
+          cycleRaysColor
+          raysColorCycleIntervalMs={1800}
+          onRaysColorChange={setRaysColor}
           className="hero-light-rays"
         />
       </div>
@@ -46,7 +52,7 @@ export function Hero({ onNavClick }: HeroProps) {
           className="flex flex-col items-center gap-2 md:gap-3 flex-1 justify-center w-full origin-center"
           style={{ transform: "scale(0.9)" }}
         >
-          <HeroTitle />
+          <HeroTitle svgColor={raysColor} />
           {/* Turntable: ~57vw, hero content scaled to 90% */}
           <div
             className="shrink-0 filter-[drop-shadow(0_0_50px_rgba(139,92,246,0.2))]"
@@ -63,7 +69,7 @@ export function Hero({ onNavClick }: HeroProps) {
 
       {/* Bottom fade for content below (future) */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-[2]"
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-2"
         style={{
           background: "linear-gradient(to top, #06060a, transparent)",
         }}

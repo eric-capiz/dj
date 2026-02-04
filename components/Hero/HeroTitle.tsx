@@ -13,32 +13,70 @@ const textStyle = {
     "0 0 24px rgba(129, 140, 248, 0.5), 0 0 48px rgba(99, 102, 241, 0.25), 0 2px 4px rgba(0,0,0,0.2)",
 };
 
-export function HeroTitle() {
+interface HeroTitleProps {
+  /** When set (e.g. from LightRays), headphone SVG uses this color so it stays in sync with the rays */
+  svgColor?: string;
+}
+
+export function HeroTitle({ svgColor }: HeroTitleProps) {
   return (
-    <h1
-      className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center shrink-0"
-      aria-label={text}
-    >
-      <span
-        className="inline-block tracking-[0.15em] sm:tracking-[0.2em]"
-        style={textStyle}
-      >
-        {text.split("").map((char, i) => (
-          <motion.span
-            key={`${char}-${i}`}
-            className="inline-block"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.35,
-              delay: i * 0.05,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
+    <div className="flex flex-col items-center shrink-0">
+      <div className="relative w-[18rem] sm:w-[20rem] md:w-88 lg:w-[24rem] overflow-visible flex items-center justify-center">
+        {/* Headphones SVG — scaled 2.25x; color from props when synced to rays, else gradient */}
+        <svg
+          viewBox="0 0 76 76"
+          className="w-full h-auto object-contain origin-center"
+          style={{ transform: "scale(2.25)" }}
+          aria-hidden
+        >
+          <defs>
+            <linearGradient
+              id="headphone-gradient"
+              x1="0%"
+              y1="0%"
+              x2="0%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#c7d2fe" />
+              <stop offset="40%" stopColor="#a5b4fc" />
+              <stop offset="100%" stopColor="#6366f1" />
+            </linearGradient>
+          </defs>
+          <path
+            fill={svgColor ?? "url(#headphone-gradient)"}
+            fillOpacity={1}
+            strokeLinejoin="round"
+            d="M 37.75,19L 38.25,19C 38.25,19 57,19 57,39C 57,48 55,51 54,52C 54,52 51,54 51.9999,51.25C 51.9999,48.9362 53,44 53,44C 53,44 54,44 54,39C 54,33 50,22.5 39,22.5L 37,22.5C 26,22.5 22,33 22,39C 22,44 23,44 23,44C 23,44 24.0001,48.9362 24.0001,51.25C 25,54 22,52 22,52C 21,51 19,48 19,39C 19,19 37.75,19 37.75,19 Z M 26.5533,39.1655C 28.194,38.9349 29.711,40.0781 29.9416,41.7188L 31.4725,52.6117C 31.7031,54.2524 30.56,55.7694 28.9192,56C 27.2785,56.2306 25.2615,55.0875 25.0309,53.4467L 23.5,42.5538C 23.2694,40.9131 24.9126,39.3961 26.5533,39.1655 Z M 49.4467,39.1655C 51.0874,39.3961 52.7306,40.9131 52.5,42.5538L 50.9691,53.4467C 50.7385,55.0875 48.7215,56.2306 47.0808,56C 45.44,55.7694 44.2969,54.2524 44.5275,52.6117L 46.0584,41.7188C 46.289,40.0781 47.806,38.9349 49.4467,39.1655 Z "
+          />
+        </svg>
+        {/* Title inside the headphone opening — moved up, slightly larger font */}
+        <h1
+          className="absolute inset-0 flex items-center justify-center text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center pointer-events-none"
+          style={{ transform: "translateY(-18%)" }}
+          aria-label={text}
+        >
+          <span
+            className="inline-block tracking-widest sm:tracking-[0.15em]"
+            style={textStyle}
           >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
-      </span>
-    </h1>
+            {text.split("").map((char, i) => (
+              <motion.span
+                key={`${char}-${i}`}
+                className="inline-block"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.35,
+                  delay: i * 0.05,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </span>
+        </h1>
+      </div>
+    </div>
   );
 }
