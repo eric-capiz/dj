@@ -370,19 +370,19 @@ export default function Home() {
                       About
                     </h2>
                     <p className="text-slate-400 text-sm sm:text-base">
-                      Space Jam got its start at some of the city’s busiest
+                      Cosmic Drift got its start at some of the city’s busiest
                       spots — The Orbit, Neon Lounge, and Stellar Room, among
                       others — each of which turned into a residency.
                     </p>
                     <p className="text-slate-400 text-sm sm:text-base">
-                      From there, Space Jam has taken the stage in some of the
-                      largest rooms in town, including arena gigs and official
-                      in-venue DJ sets for pro sports and college games. Whether
-                      it’s a packed club or a stadium, the energy stays the
-                      same.
+                      From there, Cosmic Drift has taken the stage in some of
+                      the largest rooms in town, including arena gigs and
+                      official in-venue DJ sets for pro sports and college
+                      games. Whether it’s a packed club or a stadium, the energy
+                      stays the same.
                     </p>
                     <p className="text-slate-400 text-sm sm:text-base">
-                      No matter the size of the room, Space Jam brings full
+                      No matter the size of the room, Cosmic Drift brings full
                       energy every time and keeps the crowd turned up from open
                       to close.
                     </p>

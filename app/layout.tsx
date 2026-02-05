@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Space Jam | DJ",
-  description: "Space Jam — DJ. Book, listen, and connect.",
+  title: "Cosmic Drift | DJ",
+  description: "Cosmic Drift — DJ. Book, listen, and connect.",
 };
 
 export const viewport: Viewport = {

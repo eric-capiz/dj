@@ -1,4 +1,4 @@
-# DJ Space Jam
+# DJ Cosmic Drift
 
 A cosmic DJ experience — a Next.js site with an immersive hero (animated light rays, headphone branding, interactive turntable) and content sections for about, samples, contact, tour dates, and media.
 
@@ -20,7 +20,7 @@ A cosmic DJ experience — a Next.js site with an immersive hero (animated light
 ## Hero section (current)
 
 - **Light rays** — Full-screen WebGL rays from the top; space-theme color cycling every ~1.8s with smooth transitions; optional sync of headphone SVG color to the rays.
-- **Hero title** — “DJ Space Jam” inside a headphone graphic (inline SVG) with gradient/synced color and motion-animated text.
+- **Hero title** — “DJ Cosmic Drift” inside a headphone graphic (inline SVG) with gradient/synced color and motion-animated text.
 - **Turntable** — Centered DJ controller UI (jog wheels, mixer panel, nav knobs). Knobs: Home, About, Tour dates (T), Media, Samples, SoundCloud (O), Instagram (I), Contact, Thread (T); external links open in a new tab.
 
 ## Contact form

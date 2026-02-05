@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-const text = "DJ Space Jam";
+const text = "DJ Cosmic Drift";
 
 const textStyle = {
   background: "linear-gradient(180deg, #ffffff 0%, #e0e7ff 35%, #a5b4fc 100%)",
