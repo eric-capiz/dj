@@ -68,22 +68,20 @@ function mulberry32(seed: number): () => number {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-// Crossfader: gradual color change — interpolate between fixed palettes (no rapid flashing)
-const NUM_LINK_KNOBS = 10; // browse + 9 EQ
+const NUM_LINK_KNOBS = 10;
 const CROSSFADER_KEYFRAMES = [0, 0.25, 0.5, 0.75, 1] as const;
 
-// Curated starting palette at 0.5 — space-themed, cohesive (browse + 9 EQ knobs)
 const DEFAULT_KNOB_PALETTE: string[] = [
-  "#22d3ee", // browse — cyan
-  "#818cf8", // indigo
-  "#a78bfa", // violet
-  "#06b6d4", // teal
-  "#6366f1", // indigo
-  "#38bdf8", // sky
-  "#c084fc", // purple
-  "#0ea5e9", // blue
-  "#8b5cf6", // violet
-  "#2dd4bf", // teal
+  "#22d3ee",
+  "#818cf8",
+  "#a78bfa",
+  "#06b6d4",
+  "#6366f1",
+  "#38bdf8",
+  "#c084fc",
+  "#0ea5e9",
+  "#8b5cf6",
+  "#2dd4bf",
 ];
 
 function getLinkColorsForSeed(seed: number): string[] {
@@ -143,7 +141,6 @@ function hslToHex(h: number, s: number, l: number): string {
     .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
-// Space-themed accent colors: more vivid so fader effect is obvious (wheels, dots, caps)
 function primaryColorFromFader(value: number): string {
   const keyframes: [number, string][] = [
     [0, "#2563eb"],
@@ -360,7 +357,7 @@ export default function Turntable({
             captureRef.current.pointerId
           );
       } catch {
-        /* ignore */
+        // ignore
       }
       captureRef.current = null;
     }
@@ -392,7 +389,6 @@ export default function Turntable({
       className={`select-none w-full min-w-0 relative ${className}`.trim()}
       onMouseLeave={handleMouseUp}
     >
-      {/* Custom tooltip (replaces browser default) */}
       {typeof document !== "undefined" &&
         tooltip &&
         createPortal(
@@ -425,11 +421,9 @@ export default function Turntable({
         }}
       >
         <defs>
-          {/* Base plate shadow */}
           <filter id="plateShadow" x="-20%" y="-20%" width="140%" height="140%">
             <feDropShadow dx="0" dy="8" stdDeviation="12" floodOpacity="0.35" />
           </filter>
-          {/* Jog wheel outer ring - metallic with cool blue highlight */}
           <linearGradient id="wheelRing" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#e0e8f0" />
             <stop offset="20%" stopColor="#a5b4fc" />
@@ -438,24 +432,20 @@ export default function Turntable({
             <stop offset="80%" stopColor="#94a3b8" />
             <stop offset="100%" stopColor="#cbd5e1" />
           </linearGradient>
-          {/* Jog wheel center - matte black */}
           <radialGradient id="wheelCenter" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#2a2a2a" />
             <stop offset="70%" stopColor="#1a1a1a" />
             <stop offset="100%" stopColor="#0d0d0d" />
           </radialGradient>
-          {/* Center label (vinyl look) */}
           <radialGradient id="wheelLabel" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#333" />
             <stop offset="100%" stopColor="#111" />
           </radialGradient>
-          {/* Mixer panel - matte black */}
           <linearGradient id="mixerPanel" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#252525" />
             <stop offset="50%" stopColor="#1a1a1a" />
             <stop offset="100%" stopColor="#0f0f0f" />
           </linearGradient>
-          {/* Mixer well — same darkness, reads as recessed into base */}
           <linearGradient id="mixerWellFill" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#141418" />
             <stop offset="100%" stopColor="#101014" />
@@ -469,7 +459,6 @@ export default function Turntable({
               rx={6}
             />
           </clipPath>
-          {/* Link knobs (browse + EQ) - each gets a random color from crossfader position */}
           {linkColors.map((color, i) => (
             <linearGradient
               key={i}
@@ -484,12 +473,10 @@ export default function Turntable({
               <stop offset="100%" stopColor={darkenHex(color, 0.85)} />
             </linearGradient>
           ))}
-          {/* Fader track */}
           <linearGradient id="faderTrack" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#0a0a0a" />
             <stop offset="100%" stopColor="#151515" />
           </linearGradient>
-          {/* Fader cap - primary (fader1), strong accent */}
           <linearGradient
             id="faderCapPrimary"
             x1="0%"
@@ -503,7 +490,6 @@ export default function Turntable({
             <stop offset="75%" stopColor={primaryColor} />
             <stop offset="100%" stopColor={darkenHex(primaryColor, 0.7)} />
           </linearGradient>
-          {/* Fader cap - secondary (fader2), strong accent */}
           <linearGradient
             id="faderCapSecondary"
             x1="0%"
@@ -517,13 +503,11 @@ export default function Turntable({
             <stop offset="75%" stopColor={secondaryColor} />
             <stop offset="100%" stopColor={darkenHex(secondaryColor, 0.7)} />
           </linearGradient>
-          {/* Crossfader cap - secondary (fader2), bold */}
           <linearGradient id="crossfaderCap" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor={darkenHex(secondaryColor, 0.6)} />
             <stop offset="50%" stopColor={secondaryColor} />
             <stop offset="100%" stopColor={darkenHex(secondaryColor, 0.6)} />
           </linearGradient>
-          {/* Base texture: horizontal grooves with a hint of silver */}
           <pattern
             id="baseGrooves"
             patternUnits="userSpaceOnUse"
@@ -543,7 +527,7 @@ export default function Turntable({
               />
             ))}
           </pattern>
-          {/* Decorative knob glow — stronger; matches raysColor when provided */}
+          {/* Decorative knob glow — matches raysColor (React Bits light rays) when provided */}
           <filter
             id="decoKnobGlow"
             x="-80%"
@@ -565,7 +549,6 @@ export default function Turntable({
           </filter>
         </defs>
 
-        {/* Base plate */}
         <rect
           x={40}
           y={20}
@@ -583,7 +566,6 @@ export default function Turntable({
           rx={10}
           fill="url(#mixerPanel)"
         />
-        {/* Subtle groove texture overlay on base */}
         <rect
           x={44}
           y={24}
@@ -603,7 +585,6 @@ export default function Turntable({
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
         >
-          {/* Outer grip ring (fixed) */}
           <circle
             r={WHEEL_R}
             fill="url(#wheelRing)"
@@ -618,7 +599,6 @@ export default function Turntable({
             strokeWidth="1.5"
             opacity="0.7"
           />
-          {/* Rotating part: platter + vinyl grooves + edge + center label + spin indicator dot */}
           <g transform={`rotate(${leftWheelRotation})`}>
             <circle r={WHEEL_R - 14} fill="url(#wheelCenter)" />
             {/* Vinyl grooves */}
@@ -639,7 +619,6 @@ export default function Turntable({
               strokeWidth="2"
               opacity="0.6"
             />
-            {/* Colored dot so you can see the platter spin */}
             <circle
               cx={0}
               cy={-(WHEEL_R - 14 - 28)}
@@ -658,7 +637,6 @@ export default function Turntable({
           </g>
         </g>
 
-        {/* Right jog wheel — same: ring fixed, platter turns */}
         <g
           transform={`translate(${RIGHT_WHEEL_CX}, ${WHEEL_CY})`}
           style={{ cursor: "grab" }}
@@ -683,7 +661,6 @@ export default function Turntable({
           />
           <g transform={`rotate(${rightWheelRotation})`}>
             <circle r={WHEEL_R - 14} fill="url(#wheelCenter)" />
-            {/* Vinyl grooves */}
             {[55, 70, 85, 100, 115, 130, 145].map((r) => (
               <circle
                 key={r}
@@ -701,7 +678,6 @@ export default function Turntable({
               strokeWidth="2"
               opacity="0.6"
             />
-            {/* Colored dot so you can see the platter spin */}
             <circle
               cx={0}
               cy={-(WHEEL_R - 14 - 28)}
@@ -743,7 +719,6 @@ export default function Turntable({
             opacity={0.48}
             pointerEvents="none"
           />
-          {/* Decorative knobs — 2 each side of Home button; glow matches light rays */}
           {[BROWSE_CX - 52, BROWSE_CX - 88].map((cx) => (
             <g key={`l-${cx}`}>
               <circle
@@ -774,7 +749,6 @@ export default function Turntable({
               <circle cx={cx} cy={BROWSE_CY} r={4} fill="#2a2a32" />
             </g>
           ))}
-          {/* Decorative knobs — 2×3 grid, centered in the gap between faders */}
           {[FADER_MID_Y - 25, FADER_MID_Y, FADER_MID_Y + 25].map((cy) =>
             [BROWSE_CX - 26, BROWSE_CX + 26].map((cx) => (
               <g key={`f-${cx}-${cy}`}>
@@ -855,7 +829,6 @@ export default function Turntable({
             </text>
           </g>
 
-          {/* EQ knobs - 3 columns x 3 rows, pressable (skip if no label) */}
           {[COL1, COL2, COL3].map((cx, i) =>
             [ROW1, ROW2, ROW3].map((cy, j) => {
               const id = `eq-${i}-${j}`;
@@ -918,7 +891,6 @@ export default function Turntable({
             })
           )}
 
-          {/* Channel faders - two vertical, draggable caps */}
           <g>
             <rect
               x={FADER1_X - FADER_W / 2}
@@ -978,7 +950,6 @@ export default function Turntable({
             />
           </g>
 
-          {/* Crossfader at bottom - draggable */}
           <rect
             x={CROSS_TRACK_LEFT}
             y={CROSS_Y}

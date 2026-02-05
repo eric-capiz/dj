@@ -257,7 +257,6 @@ export default function Home() {
 
   useEffect(() => {
     if (!section) return;
-    // Section just mounted — wait for layout then scroll so content appears below hero
     const t = setTimeout(() => {
       const el =
         sectionRef.current ?? document.getElementById(`section-${section}`);
@@ -269,7 +268,6 @@ export default function Home() {
   return (
     <main className="w-full min-w-0 overflow-x-hidden">
       <Hero onNavClick={handleNavClick} />
-      {/* Content below hero: shown when a nav knob is clicked; scrolls into view */}
       {section && (
         <section
           id={`section-${section}`}
@@ -277,7 +275,6 @@ export default function Home() {
           className="relative z-10 w-full py-10 sm:py-14 md:py-16 px-4 sm:px-6 overflow-hidden min-h-[50vh] sm:min-h-[60vh]"
           aria-label={section}
         >
-          {/* Dark gradient base — behind Threads */}
           <div
             className="absolute inset-0 -z-1"
             style={{
@@ -296,12 +293,10 @@ export default function Home() {
               />
             </div>
           )}
-          {/* Content in its own stacking context so it always paints above canvas */}
           <div
             className="relative z-0 isolate w-full"
             style={{ transform: "translateZ(0)" }}
           >
-            {/* Soft glow line at top */}
             <div
               className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px max-w-md opacity-60"
               style={{

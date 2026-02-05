@@ -40,9 +40,9 @@ body.dg-scroll-lock {
 }
 @media (min-width: 1024px) {
   .section-content.section-content--samples {
-    max-width: 80rem !important; /* 5xl */
+    max-width: 80rem !important;
   }
   .section-content.section-content--narrow {
-    max-width: 42rem !important; /* 2xl */
+    max-width: 42rem !important;
   }
 }

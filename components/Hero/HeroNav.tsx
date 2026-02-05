@@ -40,7 +40,6 @@ export function HeroNav({ onNavClick }: HeroNavProps) {
             </a>
           );
         }
-        // Internal: single-page only — button shows content below hero and scrolls (no navigation)
         return (
           <button
             key={href}

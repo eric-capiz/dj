@@ -21,9 +21,8 @@ interface HeroTitleProps {
 export function HeroTitle({ svgColor }: HeroTitleProps) {
   return (
     <div className="flex flex-col items-center shrink-0">
-      {/* Smaller on tablet/mobile; full size from lg up */}
       <div className="relative w-44 sm:w-52 md:w-60 lg:w-[20rem] xl:w-[24rem] overflow-visible flex items-center justify-center pointer-events-none">
-        {/* Headphones SVG — scaled 2.25x; color from props when synced to rays, else gradient */}
+        {/* Headphones SVG — color from props when synced to rays (React Bits), else gradient */}
         <svg
           viewBox="0 0 76 76"
           className="w-full h-auto object-contain origin-center pointer-events-none"
@@ -50,7 +49,6 @@ export function HeroTitle({ svgColor }: HeroTitleProps) {
             d="M 37.75,19L 38.25,19C 38.25,19 57,19 57,39C 57,48 55,51 54,52C 54,52 51,54 51.9999,51.25C 51.9999,48.9362 53,44 53,44C 53,44 54,44 54,39C 54,33 50,22.5 39,22.5L 37,22.5C 26,22.5 22,33 22,39C 22,44 23,44 23,44C 23,44 24.0001,48.9362 24.0001,51.25C 25,54 22,52 22,52C 21,51 19,48 19,39C 19,19 37.75,19 37.75,19 Z M 26.5533,39.1655C 28.194,38.9349 29.711,40.0781 29.9416,41.7188L 31.4725,52.6117C 31.7031,54.2524 30.56,55.7694 28.9192,56C 27.2785,56.2306 25.2615,55.0875 25.0309,53.4467L 23.5,42.5538C 23.2694,40.9131 24.9126,39.3961 26.5533,39.1655 Z M 49.4467,39.1655C 51.0874,39.3961 52.7306,40.9131 52.5,42.5538L 50.9691,53.4467C 50.7385,55.0875 48.7215,56.2306 47.0808,56C 45.44,55.7694 44.2969,54.2524 44.5275,52.6117L 46.0584,41.7188C 46.289,40.0781 47.806,38.9349 49.4467,39.1655 Z "
           />
         </svg>
-        {/* Title inside the headphone opening — moved up, slightly larger font */}
         <h1
           className="absolute inset-0 flex items-center justify-center text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-center pointer-events-none"
           style={{ transform: "translateY(-18%)" }}

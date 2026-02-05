@@ -107,7 +107,6 @@ const getAnchorAndDir = (
     case "bottom-right":
       return { anchor: [w, (1 + outside) * h], dir: [0, -1] };
     default:
-      // "top-center"
       return { anchor: [0.5 * w, -outside * h], dir: [0, 1] };
   }
 };
