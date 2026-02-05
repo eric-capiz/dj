@@ -544,7 +544,7 @@ export default function Home() {
                     </h2>
                     <p className="text-slate-400 text-sm sm:text-base px-1">
                       For bookings, collabs, or just to say hi — fill out the
-                      form below. Submissions go to ericcapiz@gmail.com.
+                      form below. Submissions can take 24hr to process.
                     </p>
                     <ContactForm />
                   </div>
