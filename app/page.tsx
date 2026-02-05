@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Hero } from "@/components/Hero";
+import { ContactForm } from "@/components/ContactForm/ContactForm";
 
 type Section = "" | "about" | "samples" | "contact" | "residencies" | "media";
 
@@ -28,6 +29,155 @@ const SAMPLES = [
   { name: "Solar Flare", style: "Progressive", bpm: "123" },
   { name: "Gravity Well", style: "Electro", bpm: "128" },
 ];
+
+const TOUR_DATES = [
+  { month: "Jan", day: 9, city: "Miami", state: "FL", venue: "LIV Nightclub" },
+  { month: "Jan", day: 17, city: "Chicago", state: "IL", venue: "Sound Bar" },
+  {
+    month: "Feb",
+    day: 6,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "Hakkasan Nightclub",
+  },
+  { month: "Feb", day: 14, city: "Detroit", state: "MI", venue: "Magic Stick" },
+  {
+    month: "Feb",
+    day: 17,
+    city: "New Orleans",
+    state: "LA",
+    venue: "Fillmore New Orleans",
+  },
+  { month: "Feb", day: 20, city: "Portland", state: "OR", venue: "45 East" },
+  { month: "Feb", day: 21, city: "Seattle", state: "WA", venue: "Q Nightclub" },
+  {
+    month: "Feb",
+    day: 22,
+    city: "Eugene",
+    state: "OR",
+    venue: "McDonald Theatre",
+  },
+  {
+    month: "Feb",
+    day: 28,
+    city: "Indianapolis",
+    state: "IN",
+    venue: "Old National Centre",
+  },
+  {
+    month: "Mar",
+    day: 1,
+    city: "Denver",
+    state: "CO",
+    venue: "Temple Nightclub Denver",
+  },
+  {
+    month: "Mar",
+    day: 6,
+    city: "Santa Cruz",
+    state: "CA",
+    venue: "The Catalyst",
+  },
+  {
+    month: "Mar",
+    day: 7,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "Marquee Nightclub",
+  },
+  { month: "Mar", day: 8, city: "Phoenix", state: "AZ", venue: "Sunbar" },
+  { month: "Mar", day: 20, city: "Cincinnati", state: "OH", venue: "Bogart's" },
+  {
+    month: "Mar",
+    day: 21,
+    city: "New York",
+    state: "NY",
+    venue: "Marquee New York",
+  },
+  {
+    month: "Mar",
+    day: 22,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "Hakkasan Nightclub",
+  },
+  {
+    month: "Mar",
+    day: 28,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "OMNIA Nightclub",
+  },
+  {
+    month: "Apr",
+    day: 4,
+    city: "Boston",
+    state: "MA",
+    venue: "Big Night Live",
+  },
+  {
+    month: "Apr",
+    day: 18,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "Hakkasan Nightclub",
+  },
+  {
+    month: "Apr",
+    day: 25,
+    city: "Austin",
+    state: "TX",
+    venue: "Concourse Project",
+  },
+  { month: "May", day: 9, city: "Houston", state: "TX", venue: "NOTO Houston" },
+  {
+    month: "May",
+    day: 25,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "OMNIA Nightclub",
+  },
+  {
+    month: "Jun",
+    day: 20,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "OMNIA Nightclub",
+  },
+  { month: "Jun", day: 28, city: "Atlanta", state: "GA", venue: "District" },
+  {
+    month: "Jul",
+    day: 4,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "Marquee Nightclub",
+  },
+  {
+    month: "Jul",
+    day: 26,
+    city: "Las Vegas",
+    state: "NV",
+    venue: "OMNIA Nightclub",
+  },
+  {
+    month: "Aug",
+    day: 2,
+    city: "San Francisco",
+    state: "CA",
+    venue: "1015 Folsom",
+  },
+];
+
+const MONTH_NAMES: Record<string, string> = {
+  Jan: "January",
+  Feb: "February",
+  Mar: "March",
+  Apr: "April",
+  May: "May",
+  Jun: "June",
+  Jul: "July",
+  Aug: "August",
+};
 
 export default function Home() {
   const [section, setSection] = useState<Section>("");
@@ -77,18 +227,19 @@ export default function Home() {
                   About
                 </h2>
                 <p className="text-slate-400">
-                  Space Jam is your cosmic DJ experience — blending beats from
-                  across the galaxy into one seamless set.
+                  Space Jam got its start at some of the city’s busiest spots —
+                  The Orbit, Neon Lounge, and Stellar Room, among others — each
+                  of which turned into a residency.
                 </p>
                 <p className="text-slate-400">
-                  From underground clubs to festival stages, we bring a mix of
-                  house, techno, and experimental sounds that keep the crowd
-                  moving until sunrise.
+                  From there, Space Jam has taken the stage in some of the
+                  largest rooms in town, including arena gigs and official
+                  in-venue DJ sets for pro sports and college games. Whether
+                  it’s a packed club or a stadium, the energy stays the same.
                 </p>
                 <p className="text-slate-400">
-                  Founded in 2024, Space Jam has shared the stage with artists
-                  like [Artist A], [Artist B], and has held residencies at
-                  [Venue X] and [Venue Y].
+                  No matter the size of the room, Space Jam brings full energy
+                  every time and keeps the crowd turned up from open to close.
                 </p>
                 <div className="pt-6 mt-6 border-t border-white/10 text-left max-w-lg mx-auto">
                   <h3 className="text-xl font-semibold text-white flex items-center gap-2">
@@ -101,20 +252,18 @@ export default function Home() {
                     What we do
                   </h3>
                   <p className="text-slate-400 mt-3">
-                    We specialize in long-format sets that take the room on a
+                    We focus on long-format sets that take the room on a
                     journey: warm-up grooves, peak-time energy, and late-night
-                    wind-downs. Every set is tailored to the venue and the
-                    crowd.
+                    wind-downs. Every set is built for the venue and the crowd.
                   </p>
                   <p className="text-slate-400 mt-3">
                     Beyond the decks, we run a monthly radio show and have
-                    contributed to compilations on [Label A] and [Label B]. Our
-                    first EP is due later this year.
+                    appeared on compilations and one-off releases. New material
+                    is on the way.
                   </p>
                 </div>
                 <p className="text-slate-500 text-sm pt-4">
-                  Based in [City]. Available for tours and one-off shows
-                  worldwide.
+                  Available for residencies, one-offs, and tours.
                 </p>
               </div>
             )}
@@ -165,26 +314,68 @@ export default function Home() {
               </div>
             )}
             {section === "residencies" && (
-              <div className="text-center space-y-6">
-                <h2
-                  className="text-3xl font-bold mb-6 bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-                    textShadow: "0 0 40px rgba(129,140,248,0.15)",
-                  }}
-                >
-                  Residencies
-                </h2>
-                <p className="text-slate-400">
-                  Previous and current residencies — where you can catch us
-                  regularly.
-                </p>
-                <ul className="text-left max-w-md mx-auto space-y-2 text-slate-400">
-                  <li>[Venue X] — [City]</li>
-                  <li>[Venue Y] — [City]</li>
-                  <li>More dates TBA.</li>
-                </ul>
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h2
+                    className="text-3xl font-bold mb-4 bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
+                      textShadow: "0 0 40px rgba(129,140,248,0.15)",
+                    }}
+                  >
+                    Tour dates
+                  </h2>
+                  <p className="text-slate-400">
+                    Catch us on the road in 2026. More dates TBA.
+                  </p>
+                </div>
+                <div className="space-y-8 max-w-3xl mx-auto">
+                  {Object.entries(
+                    TOUR_DATES.reduce<Record<string, typeof TOUR_DATES>>(
+                      (acc, show) => {
+                        if (!acc[show.month]) acc[show.month] = [];
+                        acc[show.month].push(show);
+                        return acc;
+                      },
+                      {}
+                    )
+                  ).map(([monthKey, shows]) => (
+                    <div key={monthKey} className="space-y-3">
+                      <h3
+                        className="text-sm font-semibold uppercase tracking-wider text-indigo-300/90"
+                        style={{
+                          borderLeft: "3px solid rgba(129,140,248,0.5)",
+                          paddingLeft: "0.75rem",
+                        }}
+                      >
+                        {MONTH_NAMES[monthKey]} 2026
+                      </h3>
+                      <ul className="grid gap-3 sm:grid-cols-2">
+                        {shows.map((show) => (
+                          <li
+                            key={`${show.month}-${show.day}-${show.venue}`}
+                            className="group p-4 rounded-lg bg-white/5 border border-white/10 text-left transition-colors hover:border-indigo-500/40 hover:bg-white/10 pl-5"
+                            style={{
+                              borderLeftWidth: "3px",
+                              borderLeftColor: "rgba(129,140,248,0.4)",
+                            }}
+                          >
+                            <span className="font-semibold text-white tabular-nums group-hover:text-indigo-200/90 transition-colors">
+                              {show.month} {show.day}
+                            </span>
+                            <span className="text-slate-400 text-sm block mt-0.5">
+                              {show.city}, {show.state}
+                            </span>
+                            <span className="text-slate-300 text-sm font-medium block mt-1">
+                              {show.venue}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             {section === "media" && (
@@ -220,55 +411,10 @@ export default function Home() {
                   Contact
                 </h2>
                 <p className="text-slate-400">
-                  For bookings, collabs, or just to say hi — reach out below.
+                  For bookings, collabs, or just to say hi — fill out the form
+                  below. Submissions go to ericcapiz@gmail.com.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center flex-wrap">
-                  <a
-                    href="mailto:hello@spacejam.dj"
-                    className="px-4 py-2 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/30 hover:border-indigo-400/50 hover:text-indigo-200 transition-colors text-sm font-medium"
-                  >
-                    hello@spacejam.dj
-                  </a>
-                  <span className="text-slate-600">·</span>
-                  <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-sm">
-                    @spacejam
-                  </span>
-                  <span className="text-slate-600">·</span>
-                  <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-400 text-sm">
-                    @spacejam_dj
-                  </span>
-                </div>
-                <div className="text-left max-w-md mx-auto space-y-4 pt-6">
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                    <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-2">
-                      <span
-                        className="w-1 h-4 rounded-full shrink-0"
-                        style={{ background: "#818cf8" }}
-                      />
-                      Booking inquiries
-                    </h3>
-                    <p className="text-slate-500 text-sm">
-                      Include the date, venue name, capacity, and type of event
-                      (club night, festival, private, etc.). We typically
-                      respond within 48 hours. For last-minute requests, DM us
-                      on socials.
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                    <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-2">
-                      <span
-                        className="w-1 h-4 rounded-full shrink-0"
-                        style={{ background: "#818cf8" }}
-                      />
-                      Press &amp; collabs
-                    </h3>
-                    <p className="text-slate-500 text-sm">
-                      For press, interviews, or collaboration ideas, use the
-                      same email with a clear subject line. We’re open to
-                      remixes, guest mixes, and label work.
-                    </p>
-                  </div>
-                </div>
+                <ContactForm />
               </div>
             )}
           </div>

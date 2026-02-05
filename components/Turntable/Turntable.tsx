@@ -199,30 +199,29 @@ function lightenHex(hex: string, factor: number): string {
     .padStart(2, "0")}${f(b).toString(16).padStart(2, "0")}`;
 }
 
-// External links open in new tab; internal paths use onNavClick or router
+// Site links first (left 2 cols), socials last (right col). External links open in new tab.
 const KNOB_NAV: Record<string, string> = {
   browse: "/",
   "eq-0-0": "/about",
-  "eq-1-0": "/residencies",
-  "eq-2-0": "/media",
   "eq-0-1": "/samples",
-  "eq-1-1": "https://soundcloud.com",
-  "eq-2-1": "https://instagram.com",
   "eq-0-2": "/contact",
-  "eq-1-2": "https://threads.net",
+  "eq-1-0": "/residencies",
+  "eq-1-1": "/media",
+  "eq-2-0": "https://soundcloud.com",
+  "eq-2-1": "https://instagram.com",
+  "eq-2-2": "https://threads.net",
 };
 
-// Letter on knob + hover tooltip. S = Samples; O = sOundclOud to avoid doubling S
 const KNOB_LABELS: Record<string, { letter: string; label: string }> = {
   browse: { letter: "H", label: "Home" },
   "eq-0-0": { letter: "A", label: "About" },
-  "eq-1-0": { letter: "R", label: "Residencies" },
-  "eq-2-0": { letter: "M", label: "Media" },
   "eq-0-1": { letter: "S", label: "Samples" },
-  "eq-1-1": { letter: "O", label: "SoundCloud" },
-  "eq-2-1": { letter: "I", label: "Instagram" },
   "eq-0-2": { letter: "C", label: "Contact" },
-  "eq-1-2": { letter: "T", label: "Thread" },
+  "eq-1-0": { letter: "T", label: "Tour dates" },
+  "eq-1-1": { letter: "M", label: "Media" },
+  "eq-2-0": { letter: "O", label: "SoundCloud" },
+  "eq-2-1": { letter: "I", label: "Instagram" },
+  "eq-2-2": { letter: "T", label: "Thread" },
 };
 
 const FADER_DEFAULT = 0.4;
@@ -703,11 +702,11 @@ export default function Turntable({
             </text>
           </g>
 
-          {/* EQ knobs - 3 columns x 3 rows, pressable (eq-2-2 slot empty) */}
+          {/* EQ knobs - 3 columns x 3 rows, pressable (skip if no label) */}
           {[COL1, COL2, COL3].map((cx, i) =>
             [ROW1, ROW2, ROW3].map((cy, j) => {
               const id = `eq-${i}-${j}`;
-              if (id === "eq-2-2") return <g key={id} />;
+              if (!KNOB_LABELS[id]) return <g key={id} />;
               const knobIndex = 1 + i * 3 + j;
               return (
                 <g
