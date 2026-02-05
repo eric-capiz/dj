@@ -62,7 +62,7 @@ export function Hero({ onNavClick }: HeroProps) {
               minWidth: "280px",
             }}
           >
-            <Turntable onNavClick={onNavClick} />
+            <Turntable onNavClick={onNavClick} raysColor={raysColor} />
           </div>
         </div>
       </div>

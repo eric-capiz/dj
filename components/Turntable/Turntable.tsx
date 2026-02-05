@@ -47,10 +47,16 @@ type DragKind =
   | { kind: "fader2"; startY: number; startVal: number }
   | { kind: "cross"; startX: number; startVal: number };
 
+const BROWSE_CX = (MIXER_LEFT + MIXER_RIGHT) / 2;
+const BROWSE_CY = MIXER_TOP + 42;
+const FADER_MID_Y = FADER_Y + FADER_H / 2;
+
 interface TurntableProps {
   className?: string;
   /** When set, nav knobs call this instead of routing; use for single-page content below hero */
   onNavClick?: (path: string) => void;
+  /** When set (e.g. from Hero light rays), decorative knob glow matches this color */
+  raysColor?: string;
 }
 
 // Simple deterministic "random" from seed + index (for stable colors per crossfader position)
@@ -230,6 +236,7 @@ const CROSS_DEFAULT = 0.5;
 export default function Turntable({
   className = "",
   onNavClick,
+  raysColor,
 }: TurntableProps) {
   const router = useRouter();
   const handleNav = useCallback(
@@ -502,6 +509,46 @@ export default function Turntable({
             <stop offset="50%" stopColor={secondaryColor} />
             <stop offset="100%" stopColor={darkenHex(secondaryColor, 0.6)} />
           </linearGradient>
+          {/* Base texture: horizontal grooves with a hint of silver */}
+          <pattern
+            id="baseGrooves"
+            patternUnits="userSpaceOnUse"
+            width="14"
+            height="14"
+          >
+            {[2, 5, 8, 11, 12].map((y) => (
+              <line
+                key={y}
+                x1={0}
+                y1={y}
+                x2={14}
+                y2={y}
+                stroke="#9ca3af"
+                strokeWidth="0.8"
+                opacity="0.5"
+              />
+            ))}
+          </pattern>
+          {/* Decorative knob glow — stronger; matches raysColor when provided */}
+          <filter
+            id="decoKnobGlow"
+            x="-80%"
+            y="-80%"
+            width="260%"
+            height="260%"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            <feFlood
+              floodColor={raysColor ?? "#a5b4fc"}
+              floodOpacity="0.45"
+              result="glow"
+            />
+            <feComposite in="glow" in2="blur" operator="in" result="softGlow" />
+            <feMerge>
+              <feMergeNode in="softGlow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
         {/* Base plate */}
@@ -521,6 +568,16 @@ export default function Turntable({
           height={HEIGHT - 48}
           rx={10}
           fill="url(#mixerPanel)"
+        />
+        {/* Subtle groove texture overlay on base */}
+        <rect
+          x={44}
+          y={24}
+          width={WIDTH - 88}
+          height={HEIGHT - 48}
+          rx={10}
+          fill="url(#baseGrooves)"
+          pointerEvents="none"
         />
 
         {/* Left jog wheel — outer ring fixed, platter + label rotate so the turn is visible */}
@@ -547,9 +604,20 @@ export default function Turntable({
             strokeWidth="1.5"
             opacity="0.7"
           />
-          {/* Rotating part: platter + edge + center label + spin indicator dot */}
+          {/* Rotating part: platter + vinyl grooves + edge + center label + spin indicator dot */}
           <g transform={`rotate(${leftWheelRotation})`}>
             <circle r={WHEEL_R - 14} fill="url(#wheelCenter)" />
+            {/* Vinyl grooves */}
+            {[55, 70, 85, 100, 115, 130, 145].map((r) => (
+              <circle
+                key={r}
+                r={r}
+                fill="none"
+                stroke="#0a0a0a"
+                strokeWidth="0.8"
+                opacity="0.5"
+              />
+            ))}
             <circle
               r={WHEEL_R - 14}
               fill="none"
@@ -601,6 +669,17 @@ export default function Turntable({
           />
           <g transform={`rotate(${rightWheelRotation})`}>
             <circle r={WHEEL_R - 14} fill="url(#wheelCenter)" />
+            {/* Vinyl grooves */}
+            {[55, 70, 85, 100, 115, 130, 145].map((r) => (
+              <circle
+                key={r}
+                r={r}
+                fill="none"
+                stroke="#0a0a0a"
+                strokeWidth="0.8"
+                opacity="0.5"
+              />
+            ))}
             <circle
               r={WHEEL_R - 14}
               fill="none"
@@ -639,6 +718,56 @@ export default function Turntable({
             stroke="#334155"
             strokeWidth="1"
           />
+
+          {/* Decorative knobs — 2 each side of Home button; glow matches light rays */}
+          {[BROWSE_CX - 52, BROWSE_CX - 88].map((cx) => (
+            <g key={`l-${cx}`}>
+              <circle
+                cx={cx}
+                cy={BROWSE_CY}
+                r={8}
+                fill="#1e1e24"
+                stroke={raysColor ?? primaryColor}
+                strokeWidth="1.5"
+                opacity="0.95"
+                filter="url(#decoKnobGlow)"
+              />
+              <circle cx={cx} cy={BROWSE_CY} r={4} fill="#2a2a32" />
+            </g>
+          ))}
+          {[BROWSE_CX + 52, BROWSE_CX + 88].map((cx) => (
+            <g key={`r-${cx}`}>
+              <circle
+                cx={cx}
+                cy={BROWSE_CY}
+                r={8}
+                fill="#1e1e24"
+                stroke={raysColor ?? secondaryColor}
+                strokeWidth="1.5"
+                opacity="0.95"
+                filter="url(#decoKnobGlow)"
+              />
+              <circle cx={cx} cy={BROWSE_CY} r={4} fill="#2a2a32" />
+            </g>
+          ))}
+          {/* Decorative knobs — 2×3 grid, centered in the gap between faders */}
+          {[FADER_MID_Y - 25, FADER_MID_Y, FADER_MID_Y + 25].map((cy) =>
+            [BROWSE_CX - 26, BROWSE_CX + 26].map((cx) => (
+              <g key={`f-${cx}-${cy}`}>
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={8}
+                  fill="#1e1e24"
+                  stroke={raysColor ?? "#a5b4fc"}
+                  strokeWidth="1.5"
+                  opacity="0.95"
+                  filter="url(#decoKnobGlow)"
+                />
+                <circle cx={cx} cy={cy} r={4} fill="#2a2a32" />
+              </g>
+            ))
+          )}
 
           {/* Top row - browse/load knob (cyan), pressable */}
           <g
