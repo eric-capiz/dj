@@ -455,6 +455,20 @@ export default function Turntable({
             <stop offset="50%" stopColor="#1a1a1a" />
             <stop offset="100%" stopColor="#0f0f0f" />
           </linearGradient>
+          {/* Mixer well — same darkness, reads as recessed into base */}
+          <linearGradient id="mixerWellFill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#141418" />
+            <stop offset="100%" stopColor="#101014" />
+          </linearGradient>
+          <clipPath id="mixerClip">
+            <rect
+              x={MIXER_LEFT}
+              y={MIXER_TOP}
+              width={MIXER_RIGHT - MIXER_LEFT}
+              height={MIXER_BOTTOM - MIXER_TOP}
+              rx={6}
+            />
+          </clipPath>
           {/* Link knobs (browse + EQ) - each gets a random color from crossfader position */}
           {linkColors.map((color, i) => (
             <linearGradient
@@ -706,7 +720,7 @@ export default function Turntable({
           </g>
         </g>
 
-        {/* Mixer center */}
+        {/* Mixer center — container with soft edge, grooves continue in for integration */}
         <g>
           <rect
             x={MIXER_LEFT}
@@ -714,11 +728,21 @@ export default function Turntable({
             width={MIXER_RIGHT - MIXER_LEFT}
             height={MIXER_BOTTOM - MIXER_TOP}
             rx={6}
-            fill="#141414"
-            stroke="#334155"
-            strokeWidth="1"
+            fill="url(#mixerWellFill)"
+            stroke="#1e1e24"
+            strokeWidth="0.5"
           />
-
+          <rect
+            x={MIXER_LEFT}
+            y={MIXER_TOP}
+            width={MIXER_RIGHT - MIXER_LEFT}
+            height={MIXER_BOTTOM - MIXER_TOP}
+            rx={6}
+            fill="url(#baseGrooves)"
+            clipPath="url(#mixerClip)"
+            opacity={0.48}
+            pointerEvents="none"
+          />
           {/* Decorative knobs — 2 each side of Home button; glow matches light rays */}
           {[BROWSE_CX - 52, BROWSE_CX - 88].map((cx) => (
             <g key={`l-${cx}`}>
