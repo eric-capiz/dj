@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Hero } from "@/components/Hero";
 import { ContactForm } from "@/components/ContactForm/ContactForm";
+import { TourDatesCarousel } from "@/components/TourDatesCarousel/TourDatesCarousel";
+import type { TourMonth } from "@/components/TourDatesCarousel/TourDatesCarousel";
 
 type Section = "" | "about" | "samples" | "contact" | "residencies" | "media";
 
@@ -179,6 +181,24 @@ const MONTH_NAMES: Record<string, string> = {
   Aug: "August",
 };
 
+function buildTourMonths(): TourMonth[] {
+  const grouped = TOUR_DATES.reduce<Record<string, typeof TOUR_DATES>>(
+    (acc, show) => {
+      if (!acc[show.month]) acc[show.month] = [];
+      acc[show.month].push(show);
+      return acc;
+    },
+    {}
+  );
+  return Object.entries(grouped).map(([monthKey, shows]) => ({
+    monthKey,
+    monthName: MONTH_NAMES[monthKey] ?? monthKey,
+    shows,
+  }));
+}
+
+const TOUR_MONTHS = buildTourMonths();
+
 export default function Home() {
   const [section, setSection] = useState<Section>("");
   const sectionRef = useRef<HTMLElement>(null);
@@ -330,52 +350,7 @@ export default function Home() {
                     Catch us on the road in 2026. More dates TBA.
                   </p>
                 </div>
-                <div className="space-y-8 max-w-3xl mx-auto">
-                  {Object.entries(
-                    TOUR_DATES.reduce<Record<string, typeof TOUR_DATES>>(
-                      (acc, show) => {
-                        if (!acc[show.month]) acc[show.month] = [];
-                        acc[show.month].push(show);
-                        return acc;
-                      },
-                      {}
-                    )
-                  ).map(([monthKey, shows]) => (
-                    <div key={monthKey} className="space-y-3">
-                      <h3
-                        className="text-sm font-semibold uppercase tracking-wider text-indigo-300/90"
-                        style={{
-                          borderLeft: "3px solid rgba(129,140,248,0.5)",
-                          paddingLeft: "0.75rem",
-                        }}
-                      >
-                        {MONTH_NAMES[monthKey]} 2026
-                      </h3>
-                      <ul className="grid gap-3 sm:grid-cols-2">
-                        {shows.map((show) => (
-                          <li
-                            key={`${show.month}-${show.day}-${show.venue}`}
-                            className="group p-4 rounded-lg bg-white/5 border border-white/10 text-left transition-colors hover:border-indigo-500/40 hover:bg-white/10 pl-5"
-                            style={{
-                              borderLeftWidth: "3px",
-                              borderLeftColor: "rgba(129,140,248,0.4)",
-                            }}
-                          >
-                            <span className="font-semibold text-white tabular-nums group-hover:text-indigo-200/90 transition-colors">
-                              {show.month} {show.day}
-                            </span>
-                            <span className="text-slate-400 text-sm block mt-0.5">
-                              {show.city}, {show.state}
-                            </span>
-                            <span className="text-slate-300 text-sm font-medium block mt-1">
-                              {show.venue}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+                <TourDatesCarousel months={TOUR_MONTHS} />
               </div>
             )}
             {section === "media" && (
