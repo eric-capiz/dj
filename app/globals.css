@@ -25,3 +25,7 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
 }
+
+body.dg-scroll-lock {
+  overflow: hidden;
+}
