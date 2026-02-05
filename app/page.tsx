@@ -276,15 +276,17 @@ export default function Home() {
                 "linear-gradient(180deg, rgba(67,56,202,0.06) 0%, #06060a 12%, #06060a 100%)",
             }}
           />
-          {/* React Bits Threads — negative z so it stays behind all content */}
-          <div className="absolute inset-0 -z-1 pointer-events-none">
-            <Threads
-              color={[0.32, 0.15, 1]}
-              amplitude={2.9}
-              distance={0}
-              enableMouseInteraction={false}
-            />
-          </div>
+          {/* React Bits Threads — only on Samples section */}
+          {section === "samples" && (
+            <div className="absolute inset-0 -z-1 pointer-events-none">
+              <Threads
+                color={[0.32, 0.15, 1]}
+                amplitude={2.9}
+                distance={0}
+                enableMouseInteraction={false}
+              />
+            </div>
+          )}
           {/* Content in its own stacking context so it always paints above canvas */}
           <div
             className="relative z-0 isolate"
