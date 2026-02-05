@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { Renderer, Program, Triangle, Mesh } from "ogl";
+import { hexToRgb, rgbToHex } from "@/utils/color";
 import "./LightRays.css";
 
 export type RaysOrigin =
@@ -60,24 +61,9 @@ interface LightRaysProps {
 
 const DEFAULT_COLOR = "#ffffff";
 
-const hexToRgb = (hex: string): [number, number, number] => {
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return m
-    ? [
-        parseInt(m[1], 16) / 255,
-        parseInt(m[2], 16) / 255,
-        parseInt(m[3], 16) / 255,
-      ]
-    : [1, 1, 1];
-};
-
-const rgbToHex = (r: number, g: number, b: number): string => {
-  const toHex = (x: number) => {
-    const h = Math.round(Math.max(0, Math.min(1, x)) * 255).toString(16);
-    return h.length === 1 ? "0" + h : h;
-  };
-  return "#" + toHex(r) + toHex(g) + toHex(b);
-};
+/** Hex to RGB normalized 0–1 for WebGL uniforms */
+const hexToRgbNorm = (hex: string): Vec3 =>
+  hexToRgb(hex).map((c) => c / 255) as Vec3;
 
 const lerpRgb = (current: Vec3, target: Vec3, t: number): Vec3 => [
   current[0] + (target[0] - current[0]) * t,
@@ -265,7 +251,7 @@ export default function LightRays({
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const targetColorRef = useRef<Vec3>(
-    hexToRgb(cycleRaysColor ? SPACE_THEME_COLORS[0] : raysColor)
+    hexToRgbNorm(cycleRaysColor ? SPACE_THEME_COLORS[0] : raysColor)
   );
   const cycleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const onRaysColorChangeRef = useRef(onRaysColorChange);
@@ -330,8 +316,8 @@ export default function LightRays({
       containerRef.current.appendChild(gl.canvas);
 
       const initialColor = cycleRaysColor
-        ? hexToRgb(SPACE_THEME_COLORS[0])
-        : hexToRgb(raysColor);
+        ? hexToRgbNorm(SPACE_THEME_COLORS[0])
+        : hexToRgbNorm(raysColor);
       targetColorRef.current = initialColor.slice(0) as Vec3;
       const uniforms: Uniforms = {
         iTime: { value: 0 },
@@ -419,9 +405,9 @@ export default function LightRays({
               lastColorNotifyRef.current = t;
               notify(
                 rgbToHex(
-                  uniforms.raysColor.value[0],
-                  uniforms.raysColor.value[1],
-                  uniforms.raysColor.value[2]
+                  Math.round(uniforms.raysColor.value[0] * 255),
+                  Math.round(uniforms.raysColor.value[1] * 255),
+                  Math.round(uniforms.raysColor.value[2] * 255)
                 )
               );
             }
@@ -448,7 +434,9 @@ export default function LightRays({
               Math.floor(Math.random() * SPACE_THEME_COLORS.length)
             ];
           while (
-            hexToRgb(nextHex).every((v, i) => Math.abs(v - prev[i]) < 0.05) &&
+            hexToRgbNorm(nextHex).every(
+              (v, i) => Math.abs(v - prev[i]) < 0.05
+            ) &&
             SPACE_THEME_COLORS.length > 1
           ) {
             nextHex =
@@ -456,7 +444,7 @@ export default function LightRays({
                 Math.floor(Math.random() * SPACE_THEME_COLORS.length)
               ];
           }
-          targetColorRef.current = hexToRgb(nextHex);
+          targetColorRef.current = hexToRgbNorm(nextHex);
         }, raysColorCycleIntervalMs);
       }
 
@@ -517,7 +505,7 @@ export default function LightRays({
     const u = uniformsRef.current;
     const renderer = rendererRef.current;
 
-    u.raysColor.value = hexToRgb(raysColor);
+    u.raysColor.value = hexToRgbNorm(raysColor);
     u.raysSpeed.value = raysSpeed;
     u.lightSpread.value = lightSpread;
     u.rayLength.value = rayLength;

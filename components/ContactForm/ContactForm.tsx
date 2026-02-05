@@ -13,18 +13,10 @@ export function ContactForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const name =
-      (
-        form.querySelector('[name="name"]') as HTMLInputElement
-      )?.value?.trim() ?? "";
-    const email =
-      (
-        form.querySelector('[name="email"]') as HTMLInputElement
-      )?.value?.trim() ?? "";
-    const message =
-      (
-        form.querySelector('[name="message"]') as HTMLTextAreaElement
-      )?.value?.trim() ?? "";
+    const data = new FormData(form);
+    const name = (data.get("name")?.toString() ?? "").trim();
+    const email = (data.get("email")?.toString() ?? "").trim();
+    const message = (data.get("message")?.toString() ?? "").trim();
 
     setStatus("sending");
     try {

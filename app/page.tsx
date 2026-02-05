@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  type CSSProperties,
+} from "react";
 import { Hero } from "@/components/Hero";
 import { ContactForm } from "@/components/ContactForm/ContactForm";
 import { TourDatesCarousel } from "@/components/TourDatesCarousel/TourDatesCarousel";
@@ -22,6 +28,14 @@ function pathToSection(path: string): Section {
   ];
   return valid.includes(name as Section) ? (name as Section) : "";
 }
+
+const SECTION_HEADING_STYLE: CSSProperties = {
+  backgroundImage:
+    "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
+  textShadow: "0 0 40px rgba(129,140,248,0.15)",
+};
+const SECTION_HEADING_CLASS =
+  "text-xl sm:text-2xl md:text-3xl font-bold bg-clip-text text-transparent";
 
 const SAMPLES = [
   { name: "Cosmic Drift", style: "House", bpm: "124", src: "/audio/demo1.mp3" },
@@ -308,12 +322,8 @@ export default function Home() {
               <>
                 <div className="w-full max-w-2xl mx-auto text-center space-y-3 sm:space-y-4">
                   <h2
-                    className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-                      textShadow: "0 0 40px rgba(129,140,248,0.15)",
-                    }}
+                    className={`${SECTION_HEADING_CLASS} mb-3 sm:mb-6`}
+                    style={SECTION_HEADING_STYLE}
                   >
                     Media
                   </h2>
@@ -354,12 +364,8 @@ export default function Home() {
                 {section === "about" && (
                   <div className="text-center space-y-4 sm:space-y-6 w-full">
                     <h2
-                      className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-                        textShadow: "0 0 40px rgba(129,140,248,0.15)",
-                      }}
+                      className={`${SECTION_HEADING_CLASS} mb-3 sm:mb-6`}
+                      style={SECTION_HEADING_STYLE}
                     >
                       About
                     </h2>
@@ -411,12 +417,8 @@ export default function Home() {
                 {section === "samples" && (
                   <div className="space-y-4 sm:space-y-8 w-full">
                     <h2
-                      className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-8 bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-                        textShadow: "0 0 40px rgba(129,140,248,0.15)",
-                      }}
+                      className={`${SECTION_HEADING_CLASS} text-center mb-4 sm:mb-8`}
+                      style={SECTION_HEADING_STYLE}
                     >
                       Samples
                     </h2>
@@ -520,12 +522,8 @@ export default function Home() {
                   <div className="space-y-4 sm:space-y-8 w-full">
                     <div className="text-center">
                       <h2
-                        className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage:
-                            "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-                          textShadow: "0 0 40px rgba(129,140,248,0.15)",
-                        }}
+                        className={`${SECTION_HEADING_CLASS} mb-3 sm:mb-4`}
+                        style={SECTION_HEADING_STYLE}
                       >
                         Tour dates
                       </h2>
@@ -539,12 +537,8 @@ export default function Home() {
                 {section === "contact" && (
                   <div className="text-center space-y-4 sm:space-y-8 w-full">
                     <h2
-                      className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
-                        textShadow: "0 0 40px rgba(129,140,248,0.15)",
-                      }}
+                      className={`${SECTION_HEADING_CLASS} mb-3 sm:mb-6`}
+                      style={SECTION_HEADING_STYLE}
                     >
                       Contact
                     </h2>

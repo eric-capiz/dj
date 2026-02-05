@@ -3,6 +3,12 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import {
+  hexToRgb,
+  rgbToHex as rgbToHexUtil,
+  darkenHex,
+  lightenHex,
+} from "@/utils/color";
 
 const WIDTH = 1000;
 const HEIGHT = 420;
@@ -106,12 +112,11 @@ const CROSSFADER_PALETTES: string[][] = CROSSFADER_KEYFRAMES.map((pos) =>
 function lerpHex(c0: string, c1: string, t: number): string {
   const [r0, g0, b0] = hexToRgb(c0);
   const [r1, g1, b1] = hexToRgb(c1);
-  const r = Math.round(r0 + t * (r1 - r0));
-  const g = Math.round(g0 + t * (g1 - g0));
-  const b = Math.round(b0 + t * (b1 - b0));
-  return `#${r.toString(16).padStart(2, "0")}${g
-    .toString(16)
-    .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+  return rgbToHexUtil(
+    Math.round(r0 + t * (r1 - r0)),
+    Math.round(g0 + t * (g1 - g0)),
+    Math.round(b0 + t * (b1 - b0))
+  );
 }
 
 /** Smooth palette: interpolate between keyframe palettes so colors change gradually */
@@ -166,40 +171,16 @@ function lerpHexKeyframes(
     const [t1, c1] = keyframes[i + 1];
     if (value >= t0 && value <= t1) {
       const t = (value - t0) / (t1 - t0);
-      const [r0, g0, b0] = hexToRgb(c0),
-        [r1, g1, b1] = hexToRgb(c1);
-      const r = Math.round(r0 + t * (r1 - r0));
-      const g = Math.round(g0 + t * (g1 - g0));
-      const b = Math.round(b0 + t * (b1 - b0));
-      return `#${r.toString(16).padStart(2, "0")}${g
-        .toString(16)
-        .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+      const [r0, g0, b0] = hexToRgb(c0);
+      const [r1, g1, b1] = hexToRgb(c1);
+      return rgbToHexUtil(
+        Math.round(r0 + t * (r1 - r0)),
+        Math.round(g0 + t * (g1 - g0)),
+        Math.round(b0 + t * (b1 - b0))
+      );
     }
   }
   return keyframes[keyframes.length - 1][1];
-}
-function hexToRgb(hex: string): [number, number, number] {
-  const r = parseInt(hex.slice(1, 3), 16),
-    g = parseInt(hex.slice(3, 5), 16),
-    b = parseInt(hex.slice(5, 7), 16);
-  return [r, g, b];
-}
-function darkenHex(hex: string, factor: number): string {
-  const [r, g, b] = hexToRgb(hex);
-  return `#${Math.min(255, Math.round(r * factor))
-    .toString(16)
-    .padStart(2, "0")}${Math.min(255, Math.round(g * factor))
-    .toString(16)
-    .padStart(2, "0")}${Math.min(255, Math.round(b * factor))
-    .toString(16)
-    .padStart(2, "0")}`;
-}
-function lightenHex(hex: string, factor: number): string {
-  const [r, g, b] = hexToRgb(hex);
-  const f = (x: number) => Math.min(255, Math.round(x + (255 - x) * factor));
-  return `#${f(r).toString(16).padStart(2, "0")}${f(g)
-    .toString(16)
-    .padStart(2, "0")}${f(b).toString(16).padStart(2, "0")}`;
 }
 
 // Site links first (left 2 cols), socials last (right col). External links open in new tab.
