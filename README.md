@@ -2,6 +2,10 @@
 
 A cosmic DJ experience — a Next.js site with an immersive hero (animated light rays, headphone branding, interactive turntable) and content sections for about, samples, contact, tour dates, and media.
 
+**[Live site →](https://dj-cosmic-drift.vercel.app/)**
+
+![DJ Cosmic Drift](https://i.imgur.com/tMlMgdR.png)
+
 ## Tech stack
 
 - **[Next.js](https://nextjs.org)** (App Router) — React framework, routing, and build
@@ -44,6 +48,8 @@ Open [http://localhost:3000](http://localhost:3000).
 - `npm run lint` — Run ESLint
 
 ## Deploy
+
+**Live:** [dj-cosmic-drift.vercel.app](https://dj-cosmic-drift.vercel.app/)
 
 You can deploy with [Vercel](https://vercel.com) or any platform that supports Next.js.
 
