@@ -17,13 +17,14 @@ A cosmic DJ experience — a Next.js site with an immersive hero (animated light
 
 | Library                                                   | Purpose                                                           |
 | --------------------------------------------------------- | ----------------------------------------------------------------- |
+| [**React Bits**](https://reactbits.dev/)                  | Hero light rays and Samples section Threads (WebGL backgrounds)   |
 | [**Motion**](https://motion.dev) (Framer Motion)          | Hero title letter animation and UI motion                         |
 | [**OGL**](https://github.com/oframe/ogl)                  | WebGL renderer for the hero light rays and Threads (shader-based) |
 | [**@use-gesture/react**](https://use-gesture.netlify.app) | Dome gallery drag/gesture interactions                            |
 
 ## Hero section (current)
 
-- **Light rays** — Full-screen WebGL rays from the top; space-theme color cycling every ~1.8s with smooth transitions; optional sync of headphone SVG color to the rays.
+- **Light rays** — [React Bits](https://reactbits.dev/)–style full-screen WebGL rays from the top; space-theme color cycling every ~1.8s with smooth transitions; optional sync of headphone SVG color to the rays.
 - **Hero title** — “DJ Cosmic Drift” inside a headphone graphic (inline SVG) with gradient/synced color and motion-animated text.
 - **Turntable** — Centered DJ controller UI (jog wheels, mixer panel, nav knobs). Knobs: Home, About, Tour dates (T), Media, Samples, SoundCloud (O), Instagram (I), Contact, Thread (T); external links open in a new tab.
 
