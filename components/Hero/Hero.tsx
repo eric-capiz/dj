@@ -3,6 +3,7 @@
 import { useState } from "react";
 import LightRays from "./LightRays";
 import { HeroTitle } from "./HeroTitle";
+import { HeroNav } from "./HeroNav";
 import { Turntable } from "@/components/Turntable";
 
 interface HeroProps {
@@ -15,7 +16,7 @@ export function Hero({ onNavClick }: HeroProps) {
 
   return (
     <section
-      className="relative min-h-screen bg-[#06060a] overflow-x-hidden"
+      className="relative min-h-screen w-full min-w-0 bg-[#06060a] overflow-x-hidden"
       aria-label="Hero"
     >
       {/* Dark base */}
@@ -49,13 +50,17 @@ export function Hero({ onNavClick }: HeroProps) {
       {/* Title + turntable: turntable is the focal point, centered ON TOP of the rays */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-2 sm:px-4 overflow-visible">
         <div
-          className="flex flex-col items-center gap-2 md:gap-3 flex-1 justify-center w-full origin-center"
+          className="flex flex-col items-center gap-4 md:gap-5 lg:gap-3 flex-1 justify-center w-full origin-center"
           style={{ transform: "scale(0.9)" }}
         >
           <HeroTitle svgColor={raysColor} />
-          {/* Turntable: ~57vw, hero content scaled to 90% */}
+          {/* Tablet/mobile: nav links below headphones */}
+          <div className="lg:hidden w-full flex justify-center">
+            <HeroNav onNavClick={onNavClick} />
+          </div>
+          {/* Desktop (lg+): turntable */}
           <div
-            className="shrink-0 filter-[drop-shadow(0_0_50px_rgba(139,92,246,0.2))]"
+            className="hidden lg:block shrink-0 filter-[drop-shadow(0_0_50px_rgba(139,92,246,0.2))]"
             style={{
               width: "57vw",
               maxWidth: "1140px",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Hero } from "@/components/Hero";
 import { ContactForm } from "@/components/ContactForm/ContactForm";
 import { TourDatesCarousel } from "@/components/TourDatesCarousel/TourDatesCarousel";
@@ -11,8 +11,8 @@ import type { TourMonth } from "@/components/TourDatesCarousel/TourDatesCarousel
 type Section = "" | "about" | "samples" | "contact" | "residencies" | "media";
 
 function pathToSection(path: string): Section {
-  if (path === "/") return "";
-  const name = path.slice(1);
+  const name = path.replace(/^\/+/, "").toLowerCase();
+  if (!name || name === "home") return "";
   const valid: Section[] = [
     "about",
     "samples",
@@ -250,22 +250,31 @@ export default function Home() {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const handleNavClick = (path: string) => setSection(pathToSection(path));
+  const handleNavClick = useCallback((path: string) => {
+    const next = pathToSection(path);
+    setSection(next);
+  }, []);
 
   useEffect(() => {
-    if (section && sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (!section) return;
+    // Section just mounted — wait for layout then scroll so content appears below hero
+    const t = setTimeout(() => {
+      const el =
+        sectionRef.current ?? document.getElementById(`section-${section}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+    return () => clearTimeout(t);
   }, [section]);
 
   return (
-    <main>
+    <main className="w-full min-w-0 overflow-x-hidden">
       <Hero onNavClick={handleNavClick} />
       {/* Content below hero: shown when a nav knob is clicked; scrolls into view */}
       {section && (
         <section
+          id={`section-${section}`}
           ref={sectionRef}
-          className="relative z-10 py-16 px-4 sm:px-6 overflow-hidden min-h-[60vh]"
+          className="relative z-10 w-full py-10 sm:py-14 md:py-16 px-4 sm:px-6 overflow-hidden min-h-[50vh] sm:min-h-[60vh]"
           aria-label={section}
         >
           {/* Dark gradient base — behind Threads */}
@@ -289,7 +298,7 @@ export default function Home() {
           )}
           {/* Content in its own stacking context so it always paints above canvas */}
           <div
-            className="relative z-0 isolate"
+            className="relative z-0 isolate w-full"
             style={{ transform: "translateZ(0)" }}
           >
             {/* Soft glow line at top */}
@@ -302,9 +311,9 @@ export default function Home() {
             />
             {section === "media" ? (
               <>
-                <div className="max-w-2xl mx-auto text-center space-y-4">
+                <div className="w-full max-w-2xl mx-auto text-center space-y-3 sm:space-y-4">
                   <h2
-                    className="text-3xl font-bold mb-6 bg-clip-text text-transparent"
+                    className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 bg-clip-text text-transparent"
                     style={{
                       backgroundImage:
                         "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
@@ -313,7 +322,7 @@ export default function Home() {
                   >
                     Media
                   </h2>
-                  <p className="text-slate-400">
+                  <p className="text-slate-400 text-sm sm:text-base">
                     Photos and video from past sets and events. Drag to rotate,
                     click to expand.
                   </p>
@@ -333,7 +342,7 @@ export default function Home() {
                     overlayBlurColor="#06060a"
                   />
                 </div>
-                <div className="max-w-2xl mx-auto text-center mt-8">
+                <div className="max-w-2xl mx-auto text-center mt-6 sm:mt-8">
                   <p className="text-slate-500 text-sm">
                     Reels and more coming soon.
                   </p>
@@ -341,14 +350,16 @@ export default function Home() {
               </>
             ) : (
               <div
-                className={`mx-auto relative ${
-                  section === "samples" ? "max-w-5xl" : "max-w-2xl"
+                className={`section-content mx-auto relative ${
+                  section === "samples"
+                    ? "section-content--samples"
+                    : "section-content--narrow"
                 }`}
               >
                 {section === "about" && (
-                  <div className="text-center space-y-6">
+                  <div className="text-center space-y-4 sm:space-y-6 w-full">
                     <h2
-                      className="text-3xl font-bold mb-6 bg-clip-text text-transparent"
+                      className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 bg-clip-text text-transparent"
                       style={{
                         backgroundImage:
                           "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
@@ -357,27 +368,27 @@ export default function Home() {
                     >
                       About
                     </h2>
-                    <p className="text-slate-400">
+                    <p className="text-slate-400 text-sm sm:text-base">
                       Space Jam got its start at some of the city’s busiest
                       spots — The Orbit, Neon Lounge, and Stellar Room, among
                       others — each of which turned into a residency.
                     </p>
-                    <p className="text-slate-400">
+                    <p className="text-slate-400 text-sm sm:text-base">
                       From there, Space Jam has taken the stage in some of the
                       largest rooms in town, including arena gigs and official
                       in-venue DJ sets for pro sports and college games. Whether
                       it’s a packed club or a stadium, the energy stays the
                       same.
                     </p>
-                    <p className="text-slate-400">
+                    <p className="text-slate-400 text-sm sm:text-base">
                       No matter the size of the room, Space Jam brings full
                       energy every time and keeps the crowd turned up from open
                       to close.
                     </p>
-                    <div className="pt-6 mt-6 border-t border-white/10 text-left max-w-lg mx-auto">
-                      <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+                    <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-white/10 text-left max-w-lg mx-auto px-1">
+                      <h3 className="text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
                         <span
-                          className="w-1 h-5 rounded-full shrink-0"
+                          className="w-1 h-4 sm:h-5 rounded-full shrink-0"
                           style={{
                             background:
                               "linear-gradient(180deg, #818cf8, #6366f1)",
@@ -385,27 +396,27 @@ export default function Home() {
                         />
                         What we do
                       </h3>
-                      <p className="text-slate-400 mt-3">
+                      <p className="text-slate-400 mt-2 sm:mt-3 text-sm sm:text-base">
                         We focus on long-format sets that take the room on a
                         journey: warm-up grooves, peak-time energy, and
                         late-night wind-downs. Every set is built for the venue
                         and the crowd.
                       </p>
-                      <p className="text-slate-400 mt-3">
+                      <p className="text-slate-400 mt-2 sm:mt-3 text-sm sm:text-base">
                         Beyond the decks, we run a monthly radio show and have
                         appeared on compilations and one-off releases. New
                         material is on the way.
                       </p>
                     </div>
-                    <p className="text-slate-500 text-sm pt-4">
+                    <p className="text-slate-500 text-sm pt-3 sm:pt-4">
                       Available for residencies, one-offs, and tours.
                     </p>
                   </div>
                 )}
                 {section === "samples" && (
-                  <div className="space-y-8">
+                  <div className="space-y-4 sm:space-y-8 w-full">
                     <h2
-                      className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent"
+                      className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-8 bg-clip-text text-transparent"
                       style={{
                         backgroundImage:
                           "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
@@ -414,12 +425,12 @@ export default function Home() {
                     >
                       Samples
                     </h2>
-                    <p className="text-slate-400 text-center">
+                    <p className="text-slate-400 text-center text-sm sm:text-base">
                       Browse and preview sounds from recent sets and releases.
                       These tracks have been featured in our mixes and live sets
                       over the past year.
                     </p>
-                    <p className="text-slate-500 text-center text-sm">
+                    <p className="text-slate-500 text-center text-xs sm:text-sm">
                       Click play to preview. All BPM and genre tags are
                       approximate.
                     </p>
@@ -429,13 +440,13 @@ export default function Home() {
                       className="sr-only"
                       aria-hidden
                     />
-                    <ul className="grid gap-6 sm:gap-8 sm:grid-cols-2">
+                    <ul className="grid w-full min-w-0 grid-cols-1 gap-3 sm:gap-6 lg:gap-8 lg:grid-cols-2">
                       {SAMPLES.map((track, i) => {
                         const isPlaying = playingIndex === i;
                         return (
                           <li
                             key={track.name}
-                            className="group p-5 sm:p-6 rounded-xl bg-[#0a0a0f] border border-white/10 text-left transition-colors hover:border-indigo-500/40 hover:bg-white/10 pl-6 flex items-center gap-4 relative z-10"
+                            className="group min-w-0 w-full p-3 sm:p-5 md:p-6 rounded-xl bg-[#0a0a0f] border border-white/10 text-left transition-colors hover:border-indigo-500/40 hover:bg-white/10 pl-4 sm:pl-6 flex items-center gap-3 sm:gap-4 relative z-10"
                             style={{
                               borderLeftWidth: "3px",
                               borderLeftColor: "rgba(129,140,248,0.4)",
@@ -456,7 +467,7 @@ export default function Home() {
                                   setPlayingIndex(i);
                                 }
                               }}
-                              className="shrink-0 w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 hover:bg-indigo-500/30 hover:border-indigo-400/50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
+                              className="shrink-0 min-w-[44px] min-h-[44px] w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 hover:bg-indigo-500/30 hover:border-indigo-400/50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
                               aria-label={isPlaying ? "Pause" : "Play"}
                             >
                               {isPlaying ? (
@@ -493,10 +504,10 @@ export default function Home() {
                               )}
                             </button>
                             <div className="min-w-0">
-                              <span className="font-medium text-white block group-hover:text-indigo-200/90 transition-colors">
+                              <span className="font-medium text-white text-sm sm:text-base block group-hover:text-indigo-200/90 transition-colors">
                                 {track.name}
                               </span>
-                              <span className="text-slate-500 text-sm">
+                              <span className="text-slate-500 text-xs sm:text-sm">
                                 {track.style} · {track.bpm} BPM
                               </span>
                             </div>
@@ -504,17 +515,17 @@ export default function Home() {
                         );
                       })}
                     </ul>
-                    <p className="text-slate-500 text-center text-sm pt-4">
+                    <p className="text-slate-500 text-center text-xs sm:text-sm pt-3 sm:pt-4">
                       More tracks and full sets will be added soon. Follow us on
                       SoundCloud and Bandcamp for updates.
                     </p>
                   </div>
                 )}
                 {section === "residencies" && (
-                  <div className="space-y-8">
+                  <div className="space-y-4 sm:space-y-8 w-full">
                     <div className="text-center">
                       <h2
-                        className="text-3xl font-bold mb-4 bg-clip-text text-transparent"
+                        className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent"
                         style={{
                           backgroundImage:
                             "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
@@ -523,7 +534,7 @@ export default function Home() {
                       >
                         Tour dates
                       </h2>
-                      <p className="text-slate-400">
+                      <p className="text-slate-400 text-sm sm:text-base">
                         Catch us on the road in 2026. More dates TBA.
                       </p>
                     </div>
@@ -531,9 +542,9 @@ export default function Home() {
                   </div>
                 )}
                 {section === "contact" && (
-                  <div className="text-center space-y-8">
+                  <div className="text-center space-y-4 sm:space-y-8 w-full">
                     <h2
-                      className="text-3xl font-bold mb-6 bg-clip-text text-transparent"
+                      className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 bg-clip-text text-transparent"
                       style={{
                         backgroundImage:
                           "linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%)",
@@ -542,7 +553,7 @@ export default function Home() {
                     >
                       Contact
                     </h2>
-                    <p className="text-slate-400">
+                    <p className="text-slate-400 text-sm sm:text-base px-1">
                       For bookings, collabs, or just to say hi — fill out the
                       form below. Submissions go to ericcapiz@gmail.com.
                     </p>

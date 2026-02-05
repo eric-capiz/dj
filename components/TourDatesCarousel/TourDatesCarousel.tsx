@@ -28,32 +28,32 @@ export function TourDatesCarousel({ months }: { months: TourMonth[] }) {
   if (!months.length) return null;
 
   return (
-    <div className="space-y-6 max-w-lg mx-auto">
-      <div className="relative min-h-[320px] flex items-stretch justify-center">
+    <div className="space-y-4 sm:space-y-6 max-w-lg mx-auto w-full">
+      <div className="relative min-h-[260px] sm:min-h-[300px] md:min-h-[320px] flex items-stretch justify-center">
         <ElectricBorder
           color={ELECTRIC_COLOR}
           speed={1}
           chaos={0.1}
-          borderRadius={20}
+          borderRadius={16}
           className="w-full max-w-md"
         >
-          <div className="p-6 bg-white/3 rounded-[20px] min-h-[280px] flex flex-col">
-            <h3 className="text-xl font-bold text-white mb-4 tabular-nums">
+          <div className="p-4 sm:p-5 md:p-6 bg-white/3 rounded-[16px] sm:rounded-[20px] min-h-[240px] sm:min-h-[260px] md:min-h-[280px] flex flex-col">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 tabular-nums">
               {current.monthName} 2026
             </h3>
-            <ul className="space-y-3 flex-1 text-left">
+            <ul className="space-y-2.5 sm:space-y-3 flex-1 text-left">
               {current.shows.map((show) => (
                 <li
                   key={`${show.month}-${show.day}-${show.venue}`}
                   className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5"
                 >
-                  <span className="font-semibold text-indigo-200/90 tabular-nums shrink-0">
+                  <span className="font-semibold text-indigo-200/90 tabular-nums shrink-0 text-sm sm:text-base">
                     {show.month} {show.day}
                   </span>
-                  <span className="text-slate-400 text-sm">
+                  <span className="text-slate-400 text-xs sm:text-sm">
                     {show.city}, {show.state}
                   </span>
-                  <span className="text-slate-300 text-sm font-medium w-full sm:w-auto">
+                  <span className="text-slate-300 text-xs sm:text-sm font-medium w-full sm:w-auto">
                     {show.venue}
                   </span>
                 </li>
@@ -63,12 +63,12 @@ export function TourDatesCarousel({ months }: { months: TourMonth[] }) {
         </ElectricBorder>
       </div>
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-3 sm:gap-4">
         <button
           type="button"
           onClick={prev}
           aria-label="Previous month"
-          className="w-10 h-10 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-indigo-500/40 transition-colors flex items-center justify-center font-medium"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-indigo-500/40 transition-colors flex items-center justify-center font-medium text-sm sm:text-base"
         >
           ←
         </button>
@@ -91,7 +91,7 @@ export function TourDatesCarousel({ months }: { months: TourMonth[] }) {
           type="button"
           onClick={next}
           aria-label="Next month"
-          className="w-10 h-10 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-indigo-500/40 transition-colors flex items-center justify-center font-medium"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-indigo-500/40 transition-colors flex items-center justify-center font-medium text-sm sm:text-base"
         >
           →
         </button>

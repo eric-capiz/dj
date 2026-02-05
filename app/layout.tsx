@@ -1,9 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Space Jam | DJ",
   description: "Space Jam — DJ. Book, listen, and connect.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -13,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased bg-[#06060a] text-white">{children}</body>
+      <body className="antialiased bg-[#06060a] text-white min-w-0 overflow-x-hidden">
+        {children}
+      </body>
     </html>
   );
 }

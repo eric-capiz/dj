@@ -6,19 +6,25 @@ const FORMSUBMIT_EMAIL = "ericcapiz@gmail.com";
 const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${FORMSUBMIT_EMAIL}`;
 
 export function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = (form.querySelector('[name="name"]') as HTMLInputElement)
-      ?.value?.trim() ?? "";
-    const email = (form.querySelector('[name="email"]') as HTMLInputElement)
-      ?.value?.trim() ?? "";
-    const message = (form.querySelector('[name="message"]') as HTMLTextAreaElement)
-      ?.value?.trim() ?? "";
+    const name =
+      (
+        form.querySelector('[name="name"]') as HTMLInputElement
+      )?.value?.trim() ?? "";
+    const email =
+      (
+        form.querySelector('[name="email"]') as HTMLInputElement
+      )?.value?.trim() ?? "";
+    const message =
+      (
+        form.querySelector('[name="message"]') as HTMLTextAreaElement
+      )?.value?.trim() ?? "";
 
     setStatus("sending");
     try {
@@ -48,12 +54,12 @@ export function ContactForm() {
   }
 
   const inputClass =
-    "w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30";
+    "w-full px-3 py-2.5 sm:py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/30 text-base sm:text-sm min-h-[44px] sm:min-h-0";
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="text-left max-w-lg mx-auto space-y-5"
+      className="text-left max-w-lg mx-auto space-y-4 sm:space-y-5 w-full"
     >
       <label className="block">
         <span className="text-slate-400 text-sm block mb-1">Name</span>

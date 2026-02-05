@@ -21,11 +21,12 @@ interface HeroTitleProps {
 export function HeroTitle({ svgColor }: HeroTitleProps) {
   return (
     <div className="flex flex-col items-center shrink-0">
-      <div className="relative w-[18rem] sm:w-[20rem] md:w-88 lg:w-[24rem] overflow-visible flex items-center justify-center">
+      {/* Smaller on tablet/mobile; full size from lg up */}
+      <div className="relative w-44 sm:w-52 md:w-60 lg:w-[20rem] xl:w-[24rem] overflow-visible flex items-center justify-center pointer-events-none">
         {/* Headphones SVG — scaled 2.25x; color from props when synced to rays, else gradient */}
         <svg
           viewBox="0 0 76 76"
-          className="w-full h-auto object-contain origin-center"
+          className="w-full h-auto object-contain origin-center pointer-events-none"
           style={{ transform: "scale(2.25)" }}
           aria-hidden
         >
@@ -51,7 +52,7 @@ export function HeroTitle({ svgColor }: HeroTitleProps) {
         </svg>
         {/* Title inside the headphone opening — moved up, slightly larger font */}
         <h1
-          className="absolute inset-0 flex items-center justify-center text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center pointer-events-none"
+          className="absolute inset-0 flex items-center justify-center text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-center pointer-events-none"
           style={{ transform: "translateY(-18%)" }}
           aria-label={text}
         >

@@ -17,6 +17,8 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -24,8 +26,23 @@ body {
   color: var(--foreground);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
+  max-width: 100vw;
 }
 
 body.dg-scroll-lock {
   overflow: hidden;
+}
+
+/* Section content uses full width on mobile/tablet; cap only on large screens */
+.section-content {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+@media (min-width: 1024px) {
+  .section-content.section-content--samples {
+    max-width: 80rem !important; /* 5xl */
+  }
+  .section-content.section-content--narrow {
+    max-width: 42rem !important; /* 2xl */
+  }
 }
