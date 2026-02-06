@@ -13,7 +13,7 @@ const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
 ];
 
 const linkClass =
-  "text-sm sm:text-base text-indigo-200/90 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#06060a] rounded";
+  "text-xl sm:text-2xl font-medium tracking-wide text-indigo-200/90 hover:text-white transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#06060a] rounded hover:tracking-wider hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]";
 
 interface HeroNavProps {
   /** Called for internal links: show section below hero and scroll (no route change) */
@@ -23,7 +23,7 @@ interface HeroNavProps {
 export function HeroNav({ onNavClick }: HeroNavProps) {
   return (
     <nav
-      className="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-6 sm:gap-y-3 px-4"
+      className="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-7 sm:gap-y-3 px-4"
       aria-label="Main navigation"
     >
       {NAV_LINKS.map(({ href, label, external }) => {

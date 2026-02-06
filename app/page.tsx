@@ -232,7 +232,7 @@ function buildTourMonths(): TourMonth[] {
       acc[show.month].push(show);
       return acc;
     },
-    {}
+    {},
   );
   return Object.entries(grouped).map(([monthKey, shows]) => ({
     monthKey,
@@ -362,30 +362,36 @@ export default function Home() {
                 }`}
               >
                 {section === "about" && (
-                  <div className="text-center space-y-4 sm:space-y-6 w-full">
-                    <h2
-                      className={`${SECTION_HEADING_CLASS} mb-3 sm:mb-6`}
-                      style={SECTION_HEADING_STYLE}
-                    >
+                  <div className="space-y-4 sm:space-y-6 w-full">
+                    <div className="max-w-lg mx-auto px-1 space-y-4 sm:space-y-6">
+                      <h2 className="text-lg sm:text-xl font-semibold text-white flex items-center gap-2 mb-3 sm:mb-6">
+                      <span
+                        className="w-1 h-4 sm:h-5 rounded-full shrink-0"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, #818cf8, #6366f1)",
+                        }}
+                      />
                       About
                     </h2>
-                    <p className="text-slate-400 text-sm sm:text-base">
+                    <p className="text-slate-400 text-sm sm:text-base text-left">
                       Cosmic Drift got its start at some of the city’s busiest
                       spots — The Orbit, Neon Lounge, and Stellar Room, among
                       others — each of which turned into a residency.
                     </p>
-                    <p className="text-slate-400 text-sm sm:text-base">
+                    <p className="text-slate-400 text-sm sm:text-base text-left">
                       From there, Cosmic Drift has taken the stage in some of
                       the largest rooms in town, including arena gigs and
                       official in-venue DJ sets for pro sports and college
                       games. Whether it’s a packed club or a stadium, the energy
                       stays the same.
                     </p>
-                    <p className="text-slate-400 text-sm sm:text-base">
+                    <p className="text-slate-400 text-sm sm:text-base text-left">
                       No matter the size of the room, Cosmic Drift brings full
                       energy every time and keeps the crowd turned up from open
                       to close.
                     </p>
+                    </div>
                     <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-white/10 text-left max-w-lg mx-auto px-1">
                       <h3 className="text-lg sm:text-xl font-semibold text-white flex items-center gap-2">
                         <span
@@ -409,7 +415,7 @@ export default function Home() {
                         material is on the way.
                       </p>
                     </div>
-                    <p className="text-slate-500 text-sm pt-3 sm:pt-4">
+                    <p className="text-slate-500 text-sm pt-3 sm:pt-4 max-w-lg mx-auto px-1">
                       Available for residencies, one-offs, and tours.
                     </p>
                   </div>
