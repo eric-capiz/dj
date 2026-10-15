@@ -31,9 +31,6 @@ export function Nav() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8">
         <a href="#top" className="font-display text-lg font-bold tracking-tight text-bone">
           DJ COSMIC DRIFT
-          <span className="ml-2 hidden text-[11px] font-medium uppercase tracking-[0.25em] text-muted sm:inline">
-            DJ
-          </span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
