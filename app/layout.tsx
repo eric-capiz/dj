@@ -1,29 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, IBM_Plex_Mono } from "next/font/google";
+import { Titan_One, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const display = Anton({
+const display = Titan_One({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-display",
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
+const sans = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-grotesk",
+  variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "BASSMENT — Eric Capiz // Warehouse Sets",
+  title: "CHROME//EC — Eric Capiz // Hyperpop DJ",
   description:
-    "BASSMENT is Eric Capiz on the decks: warehouse techno, hard groove and raw electronics. Chicago-born. 130+ BPM. No requests.",
+    "CHROME//EC is Eric Capiz on the decks: hyperpop pressure, bubblegum bass and chrome-plated club energy. Chicago-born. Mixes, the gloss synth lab, tour stubs, booking.",
   openGraph: {
-    title: "BASSMENT — Eric Capiz",
+    title: "CHROME//EC — Eric Capiz",
     description:
-      "Warehouse techno / hard groove / raw electronics. Mixes, the booth, tour dates, booking.",
+      "Hyperpop / bubblegum bass / chrome club energy. Mixes, synth lab, tour dates, booking.",
     type: "website",
   },
 };
@@ -32,7 +32,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0a0a0a",
+  themeColor: "#0d0628",
 };
 
 export default function RootLayout({
@@ -42,14 +42,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${display.variable} ${mono.variable} bg-ink font-grotesk text-bone antialiased`}
-      >
+      <body className={`${display.variable} ${sans.variable} font-sans antialiased`}>
         {children}
-        {/* photocopy grain */}
-        <div aria-hidden className="grain-overlay" />
-        {/* scanlines */}
-        <div aria-hidden className="scanlines-overlay" />
       </body>
     </html>
   );
