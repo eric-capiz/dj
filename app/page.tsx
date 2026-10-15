@@ -17,6 +17,7 @@ import { Booking } from "@/components/sections/Booking";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
+  // introReady gates the preloader exit animation via AnimatePresence above.
   const [introReady, setIntroReady] = useState(false);
   const handleIntroDone = useCallback(() => setIntroReady(true), []);
 
