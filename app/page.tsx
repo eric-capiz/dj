@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { AnimatePresence } from "motion/react";
 import { AudioProvider } from "@/lib/use-audio";
 import { Preloader } from "@/components/chrome/Preloader";
 import { CustomCursor } from "@/components/chrome/CustomCursor";
@@ -17,11 +18,14 @@ import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
   const [introReady, setIntroReady] = useState(false);
+  const handleIntroDone = useCallback(() => setIntroReady(true), []);
 
   return (
     <AudioProvider>
       <SmoothScroll />
-      <Preloader onDone={() => setIntroReady(true)} />
+      <AnimatePresence>
+        {!introReady && <Preloader onDone={handleIntroDone} />}
+      </AnimatePresence>
       <CustomCursor />
       <Nav introReady={introReady} />
       <main>
