@@ -37,14 +37,14 @@ export function About() {
   return (
     <section id="about" className="scroll-mt-20 bg-ink py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <SectionHeading eyebrow="About" title="Eric Capiz" />
+        <SectionHeading eyebrow="About" title="DJ Cosmic Drift" />
 
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           <Reveal>
             <div className="grain relative aspect-[4/5] overflow-hidden rounded-2xl">
               <Image
                 src="/img/dj-gallery-2.webp"
-                alt="Eric Capiz performing"
+                alt="DJ Cosmic Drift performing"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"

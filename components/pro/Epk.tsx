@@ -20,7 +20,7 @@ async function downloadOneSheet() {
   doc.text("ELECTRONIC PRESS KIT — ONE SHEET", M, 52);
   doc.setTextColor(245, 244, 240);
   doc.setFontSize(38);
-  doc.text("ERIC CAPIZ", M, 96);
+  doc.text("DJ COSMIC DRIFT", M, 96);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
   doc.setTextColor(154, 154, 160);
@@ -95,7 +95,7 @@ async function downloadOneSheet() {
   doc.setTextColor(40, 40, 44);
   doc.text(BOOKING_EMAIL, M, y);
 
-  doc.save("eric-capiz-one-sheet.pdf");
+  doc.save("dj-cosmic-drift-one-sheet.pdf");
 }
 
 export function Epk() {
@@ -159,7 +159,7 @@ export function Epk() {
                 <li key={g.src}>
                   <a
                     href={g.src}
-                    download={`eric-capiz-press-${i + 1}.webp`}
+                    download={`dj-cosmic-drift-press-${i + 1}.webp`}
                     className="flex items-center justify-between rounded-lg border border-line px-4 py-2.5 text-sm text-bone transition-colors hover:border-amber hover:text-amber"
                   >
                     <span className="truncate">Photo {i + 1} — {g.caption}</span>

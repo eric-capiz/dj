@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="border-t border-line bg-ink pb-32 pt-16 md:pb-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <p className="font-display text-[13vw] font-extrabold leading-none tracking-tight text-bone/95 md:text-8xl">
-          ERIC CAPIZ
+          DJ COSMIC DRIFT
         </p>
 
         <div className="mt-12 grid gap-10 border-t border-line pt-10 md:grid-cols-3">
@@ -46,7 +46,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-xs text-muted md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Eric Capiz. All rights reserved.</p>
+          <p>© 2026 DJ Cosmic Drift. All rights reserved.</p>
           <p>Chicago-born · Denver-based</p>
         </div>
       </div>

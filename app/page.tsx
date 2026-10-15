@@ -13,7 +13,7 @@ import { Booking } from "@/components/pro/Booking";
 import { Footer } from "@/components/pro/Footer";
 import { StickyPlayer } from "@/components/pro/StickyPlayer";
 
-// ERIC CAPIZ — professional DJ site (round 4).
+// DJ Cosmic Drift — professional DJ site (round 4).
 // Prior themes' components (components/sections/*, components/chrome/*,
 // components/brutal/*, components/y2k/*, old app routes) remain in the repo as
 // dead code — nothing on this page imports them. push_files cannot delete files.

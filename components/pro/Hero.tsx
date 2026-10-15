@@ -11,7 +11,7 @@ export function Hero() {
     <section id="top" className="grain relative flex min-h-[100svh] items-end overflow-hidden">
       <Image
         src="/img/dj-hero.webp"
-        alt="Eric Capiz performing live"
+        alt="DJ Cosmic Drift performing live"
         fill
         priority
         className="object-cover"
@@ -31,9 +31,9 @@ export function Hero() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="font-display text-[17vw] font-extrabold leading-[0.92] tracking-tight text-bone sm:text-7xl md:text-8xl"
         >
-          ERIC
+          COSMIC
           <br />
-          CAPIZ
+          DRIFT
         </motion.h1>
         <Reveal delay={0.15}>
           <p className="mt-6 max-w-xl text-lg text-bone/80">
@@ -53,7 +53,7 @@ export function Hero() {
               href="#book"
               className="rounded-full border border-bone/30 px-7 py-3 text-sm font-semibold text-bone transition-colors hover:border-amber hover:text-amber"
             >
-              Book Eric
+              Book now
             </a>
           </div>
         </Reveal>

@@ -1,4 +1,4 @@
-// Professional site data for ericcapiz — DJ site (round 4).
+// Professional site data for DJ Cosmic Drift (round 4).
 // NOTE: lib/data.ts is intentionally left untouched — dead components from
 // earlier rounds still import its shapes.
 
@@ -63,7 +63,7 @@ export const BIO_SHORT =
   "Chicago-born, Denver-based DJ playing house and techno with a focus on long, patient sets — deep grooves early, peak-time pressure late.";
 
 export const BIO_LONG = [
-  "Eric Capiz is a Chicago-born, Denver-based DJ whose sets move between deep house, tech house and driving techno. Raised on Chicago's club culture, his approach is patient and floor-first: long blends, careful pacing, and track selection built for rooms that dance, not phones that film.",
+  "DJ Cosmic Drift is a Chicago-born, Denver-based DJ act whose sets move between deep house, tech house and driving techno. Raised on Chicago's club culture, his approach is patient and floor-first: long blends, careful pacing, and track selection built for rooms that dance, not phones that film.",
   "His mixes have become a calling card — eleven studio sessions spanning deep, hypnotic grooves to peak-time pressure — and his calendar keeps him moving between the Midwest, both coasts, and select international dates.",
   "For bookings, press, and remix inquiries, use the booking form below.",
 ];

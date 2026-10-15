@@ -17,11 +17,11 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Eric Capiz — DJ & Producer",
+  title: "DJ Cosmic Drift — DJ & Producer",
   description:
-    "Eric Capiz is a Chicago-born, Denver-based DJ playing house and techno. Latest mixes, tour dates, EPK, and booking.",
+    "DJ Cosmic Drift is a Chicago-born, Denver-based DJ act playing house and techno. Latest mixes, tour dates, EPK, and booking.",
   openGraph: {
-    title: "Eric Capiz — DJ & Producer",
+    title: "DJ Cosmic Drift — DJ & Producer",
     description:
       "House / techno / club. Latest mixes, tour dates, press kit, booking.",
     type: "website",
