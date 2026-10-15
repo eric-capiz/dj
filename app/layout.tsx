@@ -1,28 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Unbounded, Space_Grotesk } from "next/font/google";
+import { Anton, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Unbounded({
+const display = Anton({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["400"],
   variable: "--font-display",
   display: "swap",
 });
 
-const body = Space_Grotesk({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-grotesk",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "COSMIC DRIFT — DJ // Transmission 001",
+  title: "BASSMENT — Eric Capiz // Warehouse Sets",
   description:
-    "Cosmic Drift is a Chicago-born DJ transmitting deep house, techno and cosmic grooves across the planet. Listen to the mixes, catch the tour, book the night.",
+    "BASSMENT is Eric Capiz on the decks: warehouse techno, hard groove and raw electronics. Chicago-born. 130+ BPM. No requests.",
   openGraph: {
-    title: "COSMIC DRIFT — DJ",
-    description: "Deep house / techno / cosmic grooves. Listen, tour dates, booking.",
+    title: "BASSMENT — Eric Capiz",
+    description:
+      "Warehouse techno / hard groove / raw electronics. Mixes, the booth, tour dates, booking.",
     type: "website",
   },
 };
@@ -31,7 +32,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#050508",
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({
@@ -40,11 +41,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${display.variable} ${body.variable} bg-void font-body text-zinc-100 antialiased overflow-x-hidden`}
+        className={`${display.variable} ${mono.variable} bg-ink font-grotesk text-bone antialiased`}
       >
         {children}
+        {/* photocopy grain */}
+        <div aria-hidden className="grain-overlay" />
+        {/* scanlines */}
+        <div aria-hidden className="scanlines-overlay" />
       </body>
     </html>
   );

@@ -1,44 +1,34 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { AnimatePresence } from "motion/react";
-import { AudioProvider } from "@/lib/use-audio";
-import { Preloader } from "@/components/chrome/Preloader";
-import { CustomCursor } from "@/components/chrome/CustomCursor";
-import { SmoothScroll } from "@/components/chrome/SmoothScroll";
-import { Nav } from "@/components/chrome/Nav";
-import { Hero } from "@/components/sections/Hero";
-import { Manifesto } from "@/components/sections/Manifesto";
-import { Turntable } from "@/components/sections/Turntable";
-import { Tracklist } from "@/components/sections/Tracklist";
-import { TourDates } from "@/components/sections/TourDates";
-import { Gallery } from "@/components/sections/Gallery";
-import { Booking } from "@/components/sections/Booking";
-import { Footer } from "@/components/sections/Footer";
+import { Nav } from "@/components/brutal/Nav";
+import { Hero } from "@/components/brutal/Hero";
+import { Doctrine } from "@/components/brutal/Doctrine";
+import { Mixes } from "@/components/brutal/Mixes";
+import { Sequencer } from "@/components/brutal/Sequencer";
+import { Tour } from "@/components/brutal/Tour";
+import { Gallery } from "@/components/brutal/Gallery";
+import { Booking } from "@/components/brutal/Booking";
+import { Footer } from "@/components/brutal/Footer";
+
+// BASSMENT — brutalist warehouse reboot.
+// Note: the previous cosmic theme's components (components/sections/*,
+// components/chrome/*, old app routes) remain in the repo as dead code —
+// nothing on this page imports them. push_files cannot delete files.
 
 export default function Home() {
-  // introReady gates the preloader exit animation via AnimatePresence above.
-  const [introReady, setIntroReady] = useState(false);
-  const handleIntroDone = useCallback(() => setIntroReady(true), []);
-
   return (
-    <AudioProvider>
-      <SmoothScroll />
-      <AnimatePresence>
-        {!introReady && <Preloader onDone={handleIntroDone} />}
-      </AnimatePresence>
-      <CustomCursor />
-      <Nav introReady={introReady} />
+    <>
+      <Nav />
       <main>
-        <Hero introReady={introReady} />
-        <Manifesto />
-        <Turntable />
-        <Tracklist />
-        <TourDates />
+        <Hero />
+        <Doctrine />
+        <Mixes />
+        <Sequencer />
+        <Tour />
         <Gallery />
         <Booking />
       </main>
       <Footer />
-    </AudioProvider>
+    </>
   );
 }

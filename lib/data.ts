@@ -1,3 +1,6 @@
+// BASSMENT data. Shapes kept identical to the previous version so the
+// (now dead) cosmic routes/components still type-check.
+
 export interface Track {
   name: string;
   style: string;
@@ -6,17 +9,17 @@ export interface Track {
 }
 
 export const TRACKS: Track[] = [
-  { name: "Cosmic Drift", style: "House", bpm: 124, src: "/audio/demo1.mp3" },
-  { name: "Lunar Bass", style: "Techno", bpm: 128, src: "/audio/demo2.mp3" },
-  { name: "Nebula Keys", style: "Melodic", bpm: 122, src: "/audio/demo3.mp3" },
-  { name: "Orbit Loop", style: "Deep House", bpm: 120, src: "/audio/demo4.mp3" },
-  { name: "Stellar Drop", style: "Tech House", bpm: 126, src: "/audio/demo5.mp3" },
-  { name: "Void Echo", style: "Minimal", bpm: 125, src: "/audio/demo6.mp3" },
-  { name: "Solar Flare", style: "Progressive", bpm: 123, src: "/audio/demo7.mp3" },
-  { name: "Gravity Well", style: "Electro", bpm: 128, src: "/audio/demo8.mp3" },
-  { name: "Starfield", style: "House", bpm: 124, src: "/audio/demo9.mp3" },
-  { name: "Pulse", style: "Techno", bpm: 127, src: "/audio/demo10.mp3" },
-  { name: "Eclipse", style: "Melodic", bpm: 121, src: "/audio/demo11.mp3" },
+  { name: "CONCRETE POETRY", style: "Raw", bpm: 132, src: "/audio/demo1.mp3" },
+  { name: "SUB PRESSURE", style: "Techno", bpm: 135, src: "/audio/demo2.mp3" },
+  { name: "NIGHT SHIFT", style: "Deep", bpm: 126, src: "/audio/demo3.mp3" },
+  { name: "PILEDRIVER", style: "Hard Groove", bpm: 140, src: "/audio/demo4.mp3" },
+  { name: "RUST BELT", style: "Industrial", bpm: 130, src: "/audio/demo5.mp3" },
+  { name: "COLD STORAGE", style: "Dub Techno", bpm: 124, src: "/audio/demo6.mp3" },
+  { name: "BLACKOUT", style: "Peak Time", bpm: 138, src: "/audio/demo7.mp3" },
+  { name: "STEEL WOOL", style: "Breaks", bpm: 128, src: "/audio/demo8.mp3" },
+  { name: "AFTERHOURS", style: "Hypnotic", bpm: 122, src: "/audio/demo9.mp3" },
+  { name: "LAST TRAIN", style: "Driving", bpm: 134, src: "/audio/demo10.mp3" },
+  { name: "BASSMENT TAPE", style: "Bonus", bpm: 120, src: "/audio/demo11.mp3" },
 ];
 
 export interface TourStop {
@@ -27,15 +30,14 @@ export interface TourStop {
 }
 
 export const TOUR: TourStop[] = [
-  { date: "NOV 14 2026", city: "Chicago, IL", venue: "Sound Bar", status: "tickets" },
-  { date: "NOV 21 2026", city: "Detroit, MI", venue: "Magic Stick", status: "tickets" },
-  { date: "DEC 05 2026", city: "Miami, FL", venue: "LIV Nightclub", status: "soldout" },
-  { date: "DEC 12 2026", city: "New York, NY", venue: "Elsewhere", status: "tickets" },
-  { date: "DEC 31 2026", city: "Las Vegas, NV", venue: "Hakkasan Nightclub", status: "soldout" },
-  { date: "JAN 16 2027", city: "Los Angeles, CA", venue: "Exchange LA", status: "tickets" },
-  { date: "FEB 06 2027", city: "Berlin, DE", venue: "Tresor", status: "soon" },
-  { date: "FEB 20 2027", city: "London, UK", venue: "Fabric", status: "soon" },
-  { date: "MAR 13 2027", city: "Tokyo, JP", venue: "WOMB", status: "soon" },
+  { date: "NOV 14 2026", city: "Chicago, IL", venue: "The Salt Shed", status: "tickets" },
+  { date: "NOV 28 2026", city: "Detroit, MI", venue: "Tangent Gallery", status: "tickets" },
+  { date: "DEC 12 2026", city: "Brooklyn, NY", venue: "Knockdown Center", status: "tickets" },
+  { date: "DEC 31 2026", city: "Chicago, IL", venue: "Radius — NYE", status: "soldout" },
+  { date: "JAN 23 2027", city: "Los Angeles, CA", venue: "Warehouse 22", status: "tickets" },
+  { date: "FEB 13 2027", city: "Berlin, DE", venue: "Tresor", status: "soon" },
+  { date: "FEB 27 2027", city: "London, UK", venue: "Fold", status: "soon" },
+  { date: "MAR 20 2027", city: "Tokyo, JP", venue: "WOMB", status: "soon" },
 ];
 
 export interface GalleryImage {
@@ -47,22 +49,22 @@ export interface GalleryImage {
 export const GALLERY: GalleryImage[] = [
   {
     src: "/img/dj-gallery-2.webp",
-    caption: "Sound Bar — Chicago",
+    caption: "EVIDENCE 001 — CROWD CONTROL",
     credit: "Pexels",
   },
   {
     src: "/img/dj-gallery-1.webp",
-    caption: "LED Wall Sessions",
+    caption: "EVIDENCE 002 — BOOTH CAM",
     credit: "Xuân Thống Trần / Pexels",
   },
   {
     src: "/img/dj-gallery-3.webp",
-    caption: "Festival Main Stage",
+    caption: "EVIDENCE 003 — MAIN ROOM",
     credit: "Caio Rosendo / Pexels",
   },
   {
     src: "/img/dj-gallery-4.webp",
-    caption: "Red Room Afterhours",
+    caption: "EVIDENCE 004 — 4AM",
     credit: "MART PRODUCTION / Pexels",
   },
 ];
@@ -79,6 +81,14 @@ export const SOCIALS = [
   { label: "X", href: "https://x.com" },
 ];
 
+export const DOCTRINE: string[] = [
+  "NO HEADLINERS. NO BOTTLE SERVICE.",
+  "FOUR WALLS. ONE SYSTEM. NO MERCY.",
+  "IF IT'S UNDER 120 BPM, IT'S AMBIENT.",
+  "THE DANCEFLOOR IS THE DRESS CODE.",
+];
+
+// Kept for the (dead) cosmic components that still import them.
 export const BOOKING_EMAIL = "ericcapiz@gmail.com";
 
 export function formatTime(totalSeconds: number): string {
