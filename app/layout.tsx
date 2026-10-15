@@ -1,29 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Titan_One, Space_Grotesk } from "next/font/google";
+import { Inter_Tight, Inter } from "next/font/google";
 import "./globals.css";
 
-const display = Titan_One({
+const display = Inter_Tight({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
-const sans = Space_Grotesk({
+const sans = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "CHROME//EC — Eric Capiz // Hyperpop DJ",
+  title: "Eric Capiz — DJ & Producer",
   description:
-    "CHROME//EC is Eric Capiz on the decks: hyperpop pressure, bubblegum bass and chrome-plated club energy. Chicago-born. Mixes, the gloss synth lab, tour stubs, booking.",
+    "Eric Capiz is a Chicago-born, Denver-based DJ playing house and techno. Latest mixes, tour dates, EPK, and booking.",
   openGraph: {
-    title: "CHROME//EC — Eric Capiz",
+    title: "Eric Capiz — DJ & Producer",
     description:
-      "Hyperpop / bubblegum bass / chrome club energy. Mixes, synth lab, tour dates, booking.",
+      "House / techno / club. Latest mixes, tour dates, press kit, booking.",
     type: "website",
   },
 };
@@ -31,8 +31,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#0d0628",
+  themeColor: "#0B0B0C",
 };
 
 export default function RootLayout({
@@ -42,7 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${sans.variable} font-sans antialiased`}>
+      <body
+        className={`${display.variable} ${sans.variable} bg-ink font-sans text-bone antialiased`}
+      >
         {children}
       </body>
     </html>

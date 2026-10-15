@@ -1,37 +1,46 @@
 "use client";
 
-import { Y2KAudioProvider } from "@/lib/y2k-audio";
-import { SmoothScroll } from "@/components/y2k/SmoothScroll";
-import { Nav } from "@/components/y2k/Nav";
-import { Hero } from "@/components/y2k/Hero";
-import { Manifesto } from "@/components/y2k/Manifesto";
-import { Mixes } from "@/components/y2k/Mixes";
-import { SynthLab } from "@/components/y2k/SynthLab";
-import { Tour } from "@/components/y2k/Tour";
-import { Gallery } from "@/components/y2k/Gallery";
-import { Booking } from "@/components/y2k/Booking";
-import { Footer } from "@/components/y2k/Footer";
+import { AudioProvider } from "@/lib/player";
+import { Nav } from "@/components/pro/Nav";
+import { Hero } from "@/components/pro/Hero";
+import { Ticker } from "@/components/pro/Ticker";
+import { Music } from "@/components/pro/Music";
+import { Tour } from "@/components/pro/Tour";
+import { About } from "@/components/pro/About";
+import { Epk } from "@/components/pro/Epk";
+import { Gallery } from "@/components/pro/Gallery";
+import { Booking } from "@/components/pro/Booking";
+import { Footer } from "@/components/pro/Footer";
+import { StickyPlayer } from "@/components/pro/StickyPlayer";
 
-// CHROME//EC — liquid-chrome Y2K reboot (round 3).
+// ERIC CAPIZ — professional DJ site (round 4).
 // Prior themes' components (components/sections/*, components/chrome/*,
-// components/brutal/*, old app routes) remain in the repo as dead code —
-// nothing on this page imports them. push_files cannot delete files.
+// components/brutal/*, components/y2k/*, old app routes) remain in the repo as
+// dead code — nothing on this page imports them. push_files cannot delete files.
 
 export default function Home() {
   return (
-    <Y2KAudioProvider>
-      <SmoothScroll />
+    <AudioProvider>
       <Nav />
       <main>
         <Hero />
-        <Manifesto />
-        <Mixes />
-        <SynthLab />
-        <Tour />
-        <Gallery />
-        <Booking />
+          <Ticker
+            items={[
+              "New mixes out now",
+              "On tour 2026 — 2027",
+              "EPK available",
+              "Booking open",
+            ]}
+          />
+          <Music />
+          <Tour />
+          <About />
+          <Epk />
+          <Gallery />
+          <Booking />
       </main>
       <Footer />
-    </Y2KAudioProvider>
+      <StickyPlayer />
+    </AudioProvider>
   );
 }
