@@ -4,7 +4,7 @@ import { BOOKING_EMAIL, SOCIALS } from "@/lib/pro-data";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-ink pb-32 pt-16 md:pb-28">
+    <footer className="border-t border-line bg-ink pb-10 pt-16">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <p className="font-display text-[13vw] font-extrabold leading-none tracking-tight text-bone/95 md:text-8xl">
           DJ COSMIC DRIFT

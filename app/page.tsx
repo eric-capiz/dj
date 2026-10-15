@@ -21,6 +21,10 @@ import { StickyPlayer } from "@/components/pro/StickyPlayer";
 export default function Home() {
   return (
     <AudioProvider>
+      {/* Bottom padding reserves clearance for the fixed StickyPlayer
+          (measured at runtime via --player-clearance) so the bar can never
+          cover interactive content, at any viewport width. */}
+      <div style={{ paddingBottom: "var(--player-clearance, 6rem)" }}>
       <Nav />
       <main>
         <Hero />
@@ -40,6 +44,7 @@ export default function Home() {
           <Booking />
       </main>
       <Footer />
+      </div>
       <StickyPlayer />
     </AudioProvider>
   );

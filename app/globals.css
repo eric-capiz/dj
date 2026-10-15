@@ -29,6 +29,8 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #3a3a3e var(--color-ink);
   scroll-behavior: smooth;
+  /* Keep anchor-scrolled sections clear of the fixed sticky player */
+  scroll-padding-bottom: var(--player-clearance, 6rem);
 }
 
 body {

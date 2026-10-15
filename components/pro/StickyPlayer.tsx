@@ -41,6 +41,24 @@ function Visualizer({ analyser, playing }: { analyser: AnalyserNode | null; play
 export function StickyPlayer() {
   const p = usePlayer();
   const seekRef = useRef<HTMLInputElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+
+  // Publish the player's rendered height (+ breathing room) as a CSS variable
+  // so page content can reserve clearance and the fixed bar never covers it.
+  // Re-measured on resize via ResizeObserver (height differs across widths).
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+    const root = document.documentElement;
+    const apply = () => {
+      const h = Math.ceil(bar.getBoundingClientRect().height);
+      root.style.setProperty("--player-clearance", `${h + 16}px`);
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(bar);
+    return () => ro.disconnect();
+  }, []);
 
   const progress = p.duration > 0 ? (p.currentTime / p.duration) * 100 : 0;
 
@@ -110,7 +128,10 @@ export function StickyPlayer() {
       </AnimatePresence>
 
       {/* Player bar */}
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-ink/92 backdrop-blur-md">
+      <div
+        ref={barRef}
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-ink/92 backdrop-blur-md"
+      >
         {/* Seek */}
         <button
           className="group relative block h-4 w-full cursor-pointer"
